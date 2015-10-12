@@ -1,0 +1,23 @@
+{
+  "name": "parasplat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/JaredCross/parasplat",
+  "authors": [
+    "Jared Cross <cross.jared@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "phaser": "~2.4.3"
+  }
+}
