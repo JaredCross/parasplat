@@ -76,9 +76,7 @@ Main.prototype = {
       }
 
       if(me.player.body.velocity.y > 0) {
-        speedDisplay.text = 'Speed ' + Math.round(me.player.body.speed'?
-
-      );
+        speedDisplay.text = 'Speed ' + Math.round(me.player.body.speed);
      } else {
        speedDisplay.text = 'Speed ' + '0';
      }
