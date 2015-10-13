@@ -8,9 +8,29 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-// view engine setup
+server.listen(4200);
+
+app.get('/', function (req, res, next) {
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', function (socket) {
+  console.log('user connected');
+
+  socket.on('testing', function (data) {
+    console.log(data.user + ' logged from server');
+    socket.emit('test', 'sent from server to be logged by client');
+  });
+  
+
+});
+
+
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
