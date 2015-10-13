@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
     console.log(data.user + ' logged from server');
     socket.emit('test', 'sent from server to be logged by client');
   });
-  
+
 
 });
 
@@ -41,6 +41,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(__dirname +'/js'));
+app.use('/assets', express.static(__dirname +'/assets'));
 
 app.use('/', routes);
 app.use('/users', users);
