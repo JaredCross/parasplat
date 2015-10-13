@@ -1,48 +1,25 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>I Hate Squares</title>
-    <script type="text/javascript" src="js/phaser.min.js"></script>
-    <script type="text/javascript" src="js/boot.js"></script>
-    <script type="text/javascript" src="js/preload.js"></script>
-    <script type="text/javascript" src="js/gametitle.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/gameover.js"></script>
-    <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
-    <script type="text/javascript">
-        (function() {
-
-                //Create a new game that fills the screen
-                game = new Phaser.Game(1200, 600, Phaser.AUTO);
-
-                //Add all states
-                game.state.add("Boot", Boot);
-                game.state.add("Preload", Preload);
-                game.state.add("GameTitle", GameTitle);
-                game.state.add("Main", Main);
-                game.state.add("GameOver", GameOver);
-
-                //Start the first state
-                game.state.start("Boot");
-
-        })();
-    </script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-      socket.on('test', function (data) {
-        console.log(data);
-      });
-      socket.emit('testing', { user: "me"});
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Parasplat</title>
+    <link rel="stylesheet" href="css/dist/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src='css/dist/js/bootstrap.min.js'>
 
     </script>
-</head>
-<body>
-  test
-</body>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="#">
+      <img alt="Brand" src="...">
+    </a>
+    </div>
+    <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+    </div>
+</nav>
+
+  </body>
 </html>
