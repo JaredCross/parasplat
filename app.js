@@ -18,13 +18,18 @@ app.get('/', function (req, res, next) {
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function (socket) {
-  console.log('user connected');
+app.get('/parasplat', function (req, res, next) {
+  res.sendFile(__dirname +'/game.html');
+  io.on('connection', function (socket) {
+    console.log('user connected');
 
-  socket.on('testing', function (data) {
-    console.log(data.user + ' logged from server');
-    socket.emit('test', 'sent from server to be logged by client');
-  });
+    socket.on('testing', function (data) {
+      console.log(data.user + ' logged from server');
+      socket.emit('test', 'sent from server to be logged by client');
+    });
+});
+
+
 
 
 });
@@ -43,6 +48,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/js', express.static(__dirname +'/js'));
 app.use('/assets', express.static(__dirname +'/assets'));
+app.use('/css', express.static(__dirname +'/css'));
+app.use('/images', express.static(__dirname+'/images'));
 
 app.use('/', routes);
 app.use('/users', users);
