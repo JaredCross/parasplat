@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cookieSession = require('cookie-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -12,26 +13,46 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+
 server.listen(4200);
 
+//cookie-session
+app.use(cookieSession({
+  name: 'session',
+  keys: ['SESSION_KEY1', 'SESSION_KEY2', 'SESSION_KEY3']
+}));
+
+//socket.io client connections/disconnects
+var clients = [];
+
+io.on('connection', function (socket) {
+  clients.push(socket.id);
+  // socket.broadcast.emit('clients', clients);
+  io.emit('clients', clients);
+
+  socket.on('testing', function (data) {
+    console.log(data.user + ' logged from server');
+    socket.emit('test', clients + ' sent from server to be logged by client');
+    socket.emit('test', 'you are: ' + socket.id);
+  });
+
+
+
+  socket.on('disconnect', function (data) {
+    clients.splice(clients.indexOf(data.id), 1);
+    // socket.broadcast.emit('clients', clients);
+    io.emit('clients', clients);
+  });
+});
+
+//location routing
 app.get('/', function (req, res, next) {
+
   res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/parasplat', function (req, res, next) {
   res.sendFile(__dirname +'/game.html');
-  io.on('connection', function (socket) {
-    console.log('user connected');
-
-    socket.on('testing', function (data) {
-      console.log(data.user + ' logged from server');
-      socket.emit('test', 'sent from server to be logged by client');
-    });
-});
-
-
-
-
 });
 
 

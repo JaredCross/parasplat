@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='parasplat'>
   <head>
     <meta charset="utf-8">
     <title>Parasplat</title>
@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="./css/style.css" media="screen" title="no title" charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src='./css/dist/js/bootstrap.min.js'></script>
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="./js/angular-socket-io/socket.js"></script>
     <script type="text/javascript" src='./js/web-app.js'></script>
   </head>
-  <body>
+  <body ng-controller='UsersController'>
     <nav class="navbar navbar-default">
     <div class="container-fluid">
   <div class="navbar-header">
@@ -24,5 +26,8 @@
 
 <p><a class="btn btn-primary btn-lg" href="/parasplat" role="button">=)</a></p>
 </div>
+  <!-- <div ng-controller='UsersController'> -->
+    <div>{{users}}</div>
+  <!-- </div> -->
   </body>
 </html>

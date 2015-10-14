@@ -4,6 +4,28 @@ var Main = function(game){
 
 Main.prototype = {
 
+  createPlayer2: function () {
+    var me = this;
+
+    //Add the player to the game by creating a new sprite
+    me.player = me.game.add.sprite(me.game.world.centerX / 2, me.game.world.centerY, 'player');
+
+    //Set the players anchor point to be in the middle horizontally
+    me.player.anchor.setTo(0.5, 0.5);
+
+    //Enable physics on the player
+    me.game.physics.arcade.enable(me.player);
+
+    //Make the player fall by applying gravity
+    me.player.body.gravity.y = 1;
+
+    //Make the player collide with the game boundaries
+    me.player.body.collideWorldBounds = true;
+
+    //This means the players velocity will be unaffected by collisions
+    me.player.body.immovable = true;
+  },
+
   createPlayer: function(){
 
     var me = this;
@@ -50,6 +72,18 @@ Main.prototype = {
 
       //Add the player to the screen
       me.createPlayer();
+
+      socket.on('clients', function (data) {
+        console.log(data + ' from main.js');
+        if (data.length > 1) {
+          me.createPlayer2();
+        } else {
+          console.log('only one player');
+        }
+
+      });
+
+
 
       var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
 
