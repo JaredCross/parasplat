@@ -7,14 +7,16 @@ var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
-var app = require('express')();
+
+var app = express();
+
+// var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-
-server.listen(4200);
+//
+//
+server.listen(3000);
 
 //cookie-session
 app.use(cookieSession({
@@ -36,23 +38,11 @@ io.on('connection', function (socket) {
     socket.emit('test', 'you are: ' + socket.id);
   });
 
-
-
   socket.on('disconnect', function (data) {
     clients.splice(clients.indexOf(data.id), 1);
     // socket.broadcast.emit('clients', clients);
     io.emit('clients', clients);
   });
-});
-
-//location routing
-app.get('/', function (req, res, next) {
-
-  res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/parasplat', function (req, res, next) {
-  res.sendFile(__dirname +'/game.html');
 });
 
 
@@ -73,7 +63,7 @@ app.use('/css', express.static(__dirname +'/css'));
 app.use('/images', express.static(__dirname+'/images'));
 
 app.use('/', routes);
-app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
