@@ -7,26 +7,21 @@
     <link rel="stylesheet" href="./css/style.css" media="screen" title="no title" charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src='./css/dist/js/bootstrap.min.js'></script>
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js'></script>
+    <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.js'></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src='./js/web-app.js'></script>
   </head>
-  <body ng-controller='UsersController'>
+  <body ng-controller='ApplicationController'>
     <nav class="navbar navbar-default">
-    <div class="container-fluid">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#">Parasplat!</a>
+    <div class="container-fluid" ng-controller='UsersController'>
+  <div class="navbar-header" ng-controller='UsersController'>
+    <a class="navbar-brand" href="#/">Parasplat!</a>
+    <a class="navbar-brand" href="#/">{{users}}</a>
     </div>
     <button type="button" class="btn btn-default navbar-btn">Sign in</button>
     </div>
-</nav>
-<div class="jumbotron">
-<h1>Do you want to play a game?</h1>
-
-<p><a class="btn btn-primary btn-lg" href="/parasplat" role="button">=)</a></p>
-</div>
-  <!-- <div ng-controller='UsersController'> -->
-    <div>{{users}}</div>
-  <!-- </div> -->
+  </nav>
+  <div ng-view></div>
   </body>
 </html>

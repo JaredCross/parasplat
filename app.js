@@ -24,6 +24,21 @@ app.use(cookieSession({
   keys: ['SESSION_KEY1', 'SESSION_KEY2', 'SESSION_KEY3']
 }));
 
+app.use(function (req, res, next) {
+  io.on('connection', function (socket) {
+    req.session.clientID = socket.id;
+  });
+
+  next();
+});
+
+
+
+
+// app.get('/', function(req, res, next) {
+//   res.sendFile(path.resolve(__dirname +'/public/test-index.html'));
+// });
+
 //socket.io client connections/disconnects
 var clients = [];
 
@@ -39,9 +54,11 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function (data) {
+    console.log(data.id);
     clients.splice(clients.indexOf(data.id), 1);
     // socket.broadcast.emit('clients', clients);
     io.emit('clients', clients);
+
   });
 });
 

@@ -1,4 +1,6 @@
-var app = angular.module('parasplat', []);
+var app = angular.module('parasplat', ['ngRoute']);
+
+
 
 app.controller('UsersController', function ($scope) {
   var socket = io();
@@ -8,3 +10,18 @@ app.controller('UsersController', function ($scope) {
     });
   });
 });
+
+app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http) {
+  $scope.$route = $route;
+  $scope.$location = $location;
+  $scope.$routeParams = $routeParams;
+});
+
+// app.config(function($routeProvider, $locationProvider){
+//   $routeProvider.when("/",
+//     {
+//       templateUrl: "/partials/home.html",
+//       controller: "ApplicationController",
+//       controllerAs: "app",
+//     });
+// });

@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  nav(class="navbar navbar-default")
+    div(class="container-fluid")
+      div(class="navbar-header")
+        a(class="navbar-brand" href="#") Parasplat!
+        a(class="navbar-brand" href="#") {{users}}
+      button(type="button" class="btn btn-default navbar-btn") Sign in
+  div(class="jumbotron")
+    h1 Do you want to play a game?
+    p
+      a(class="btn btn-primary btn-lg" href="/parasplat" role="button") =)
