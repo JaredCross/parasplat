@@ -5,6 +5,7 @@ var app = angular.module('parasplat', ['ngRoute']);
 app.controller('UsersController', function ($scope) {
   var socket = io();
   socket.on('clients', function (clients) {
+    console.log(clients);
     $scope.$apply(function () {
       $scope.users = clients.length + ' users online';
     });
