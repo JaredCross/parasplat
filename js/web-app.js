@@ -22,10 +22,22 @@ app.factory('Parasplat', function () {
       game.state.start("Boot");
 
       socket.emit('joinGameLobby', {user : 'me'});
+
+      var lfg = setInterval(function () {
+        socket.emit('lookingForGame');
+      }, 3000);
+
+
+      socket.on('leaveLFG', function () {
+        clearInterval(lfg);
+      });
+
     },
+
 
     destroyGame : function () {
       game.destroy();
+      socket.emit('leaveGameLobby');
     }
   };
 

@@ -34,19 +34,64 @@ app.use(cookieSession({
 
 //socket.io client connections/disconnects
 var clients = [];
+var gameNumber = 1;
 
 io.on('connection', function (socket) {
   clients.push(socket.id);
   io.emit('clients', clients);
+
+  //move payer to game lobby
+  socket.on('joinGameLobby', function (data) {
+    socket.join('gameLobby');
+  });
+
+  //remove player form game lobby
+  socket.on('leaveGameLobby', function (data) {
+    socket.leave('gameLobby');
+  });
 
   socket.on('disconnect', function (data) {
     clients.splice(clients.indexOf(data.id), 1);
     io.emit('clients', clients);
   });
 
-  socket.on('joinGameLobby', function (data) {
-    console.log(data);
+  socket.on('lookingForGame', function (data) {
+    var gameRooms = [];
+    var allRooms = Object.keys(io.sockets.adapter.rooms);
+    for (var i = 0; i < allRooms.length; i++) {
+      if (allRooms[i].match('gameRoom')) {
+        gameRooms.push(allRooms[i]);
+      }
+    }
+
+    var allGamesFull = false;
+
+    if (gameRooms.length === 0) {
+      socket.join('gameRoom ' + socket.id);
+      socket.leave('gameLobby');
+      socket.emit('leaveLFG');
+    } else {
+      for (var i = 0; i < gameRooms.length; i++) {
+        if (Object.keys(io.sockets.adapter.rooms[gameRooms[i]]).length < 2) {
+          socket.join(gameRooms[i]);
+          socket.leave('gameLobby');
+          socket.emit('leaveLFG');
+          allGamesFull = false;
+          io.sockets.to(gameRooms[i]).emit('gameReady');
+          break;
+        } else {
+          allGamesFull = true;
+        }
+      }
+    }
+
+    if (allGamesFull) {
+      socket.join('gameRoom ' + socket.id);
+      socket.leave('gameLobby');
+      socket.emit('leaveLFG');
+    }
   });
+
 });
 
 

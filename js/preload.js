@@ -9,18 +9,16 @@ Preload.prototype = {
     },
 
     create: function(){
+      var newGame = this;
       var octopus = game.add.sprite(300,200,'octopus');
       octopus.animations.add('swim');
       octopus.animations.play('swim', 30, true);
 
+      socket.on('gameReady', function () {
+        console.log('working?');
+        newGame.game.state.start("Main");
+      });
+
     },
 
-    // update: function () {
-    //   var gameState = this;
-    //   socket.on('clients', function (clients) {
-    //     if (clients.length > 1) {
-    //       gameState.game.state.start("Main");
-    //     }
-    //   });
-    // }
 };
