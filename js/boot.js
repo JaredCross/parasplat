@@ -1,3 +1,5 @@
+var socket = io();
+
 var Boot = function(game){
 
 };

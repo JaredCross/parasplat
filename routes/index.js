@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/parasplat', function (req, res, next) {
-  res.sendFile(path.resolve(__dirname + '/../public/game.html'));
+  // res.sendFile(path.resolve(__dirname + '/../public/game.html'));
+  res.render('game');
 });
 
 

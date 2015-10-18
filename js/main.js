@@ -8,7 +8,7 @@ Main.prototype = {
     var me = this;
 
     //Add the player to the game by creating a new sprite
-    me.player = me.game.add.sprite(me.game.world.centerX / 2, me.game.world.centerY, 'player');
+    me.player = me.game.add.sprite(me.game.world.centerX, me.game.world.centerY, 'player');
 
     //Set the players anchor point to be in the middle horizontally
     me.player.anchor.setTo(0.5, 0.5);
