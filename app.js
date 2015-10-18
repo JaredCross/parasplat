@@ -43,6 +43,10 @@ io.on('connection', function (socket) {
     clients.splice(clients.indexOf(data.id), 1);
     io.emit('clients', clients);
   });
+
+  socket.on('joinGameLobby', function (data) {
+    console.log(data);
+  });
 });
 
 

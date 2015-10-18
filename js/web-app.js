@@ -20,6 +20,8 @@ app.factory('Parasplat', function () {
 
       //Start the first state
       game.state.start("Boot");
+
+      socket.emit('joinGameLobby', {user : 'me'});
     },
 
     destroyGame : function () {
