@@ -15,12 +15,12 @@ Preload.prototype = {
 
     },
 
-    update: function () {
-      var gameState = this;
-      socket.on('clients', function (clients) {
-        if (clients.length > 1) {
-          gameState.game.state.start("Main");
-        }
-      });
-    }
+    // update: function () {
+    //   var gameState = this;
+    //   socket.on('clients', function (clients) {
+    //     if (clients.length > 1) {
+    //       gameState.game.state.start("Main");
+    //     }
+    //   });
+    // }
 };

@@ -1,5 +1,6 @@
 var GameOver = function(game){};
 
+
 GameOver.prototype = {
 
     create: function(){
@@ -10,4 +11,4 @@ GameOver.prototype = {
         this.game.state.start("GameTitle");
     }
 
-}
+};

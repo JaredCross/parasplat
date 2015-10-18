@@ -1,3 +1,18 @@
 body {
   background-image: url('../images/dvsup.png');
 }
+
+canvas {
+  animation: my_fade_animation 1.5s linear;
+  -webkit-animation: my_fade_animation 3.0s linear;
+}
+
+@keyframes my_fade_animation {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+@-webkit-keyframes my_fade_animation {
+  from { opacity:0; }
+  to { opacity:1; }
+}

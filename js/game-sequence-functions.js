@@ -1,3 +1,5 @@
+function startGame() {
+
 (function() {
         //Create a new game that fills the screen
         game = new Phaser.Game(1200, 600, Phaser.AUTO);
@@ -13,3 +15,9 @@
         game.state.start("Boot");
 
 })();
+
+}
+
+function destroyGame() {
+  game.destroy();
+}
