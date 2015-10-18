@@ -73,16 +73,6 @@ Main.prototype = {
       //Add the player to the screen
       me.createPlayer();
 
-      socket.on('clients', function (data) {
-        console.log(data + ' from main.js');
-        if (data.length > 1) {
-          me.createPlayer2();
-        } else {
-          console.log('only one player');
-        }
-
-      });
-
 
 
       var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
