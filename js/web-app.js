@@ -2,6 +2,25 @@ var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
 var game = false;
 
+//controller section
+
+app.controller('UsersController', function ($scope, Parasplat) {
+  var socket = io();
+  socket.on('clients', function (clients) {
+    console.log(clients);
+    $scope.$apply(function () {
+      $scope.users = clients.length + ' users online';
+    });
+  });
+
+  $scope.startGame = function () {
+    Parasplat.startGame();
+  };
+
+  $scope.endGame = function () {
+    Parasplat.destroyGame();
+  };
+});
 
 app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http, Parasplat) {
   if (game) {
