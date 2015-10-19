@@ -14,10 +14,7 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://" + process.env.MONGO_DB);
 
 var userSchema = new mongoose.Schema({
-  fullName: String,
-  email: String,
-  password: String,
-  destinations: Array,
+  googleId: String
 });
 
 var User = mongoose.model('User', userSchema);
@@ -54,7 +51,6 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return done(err, user);
     });
@@ -152,7 +148,9 @@ io.on('connection', function (socket) {
   });
 
   socket.on('p2Info', function (data) {
-    io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
+    if (socket.rooms[1]) {
+      io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
+    }
   });
 
   socket.on('pressedStart', function (data) {
