@@ -19,11 +19,6 @@ var io = require('socket.io')(server);
 
 server.listen(3000);
 
-//cookie-session
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.PARASPLAT_SESSION_KEY1,process.env.PARASPLAT_SESSION_KEY2, process.env.PARASPLAT_SESSION_KEY3]
-}));
 
 
 //passport and google-oauth
@@ -46,14 +41,9 @@ passport.use(new GoogleStrategy({
     passReqToCallback : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    process.nextTick(function () {
 
-  // To keep the example simple, the user's Google profile is returned to
-  // represent the logged-in user.  In a typical application, you would want
-  // to associate the Google account with a user record in your database,
-  // and return that user instead.
-  return done(null, profile);
-});
+      return done(null, profile);
+
     // users.find({ googleId : profile.id}, function (err, data) {
     //   if (err) {
     //     users.insert({googleId : profile.id}, function (err, data) {
@@ -67,6 +57,15 @@ passport.use(new GoogleStrategy({
 
   }
 ));
+
+//cookie-session
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.PARASPLAT_SESSION_KEY1,process.env.PARASPLAT_SESSION_KEY2, process.env.PARASPLAT_SESSION_KEY3]
+}));
+
+app.use( passport.initialize());
+app.use( passport.session());
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
