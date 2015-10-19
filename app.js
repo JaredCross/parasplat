@@ -70,6 +70,7 @@ io.on('connection', function (socket) {
       socket.join('gameRoom ' + socket.id);
       socket.leave('gameLobby');
       socket.emit('leaveLFG');
+      io.to(socket.id).emit('player1');
     } else {
       for (var i = 0; i < gameRooms.length; i++) {
         if (Object.keys(io.sockets.adapter.rooms[gameRooms[i]]).length < 2) {
@@ -77,6 +78,7 @@ io.on('connection', function (socket) {
           socket.leave('gameLobby');
           socket.emit('leaveLFG');
           allGamesFull = false;
+          io.to(socket.id).emit('player2');
           io.sockets.to(gameRooms[i]).emit('gameReady');
           break;
         } else {
@@ -89,7 +91,17 @@ io.on('connection', function (socket) {
       socket.join('gameRoom ' + socket.id);
       socket.leave('gameLobby');
       socket.emit('leaveLFG');
+      io.to(socket.id).emit('player1');
     }
+  });
+
+  socket.on('p1Info', function (data) {
+    io.sockets.to('gameRoom ' + socket.id).emit('p1InfoUpdate', data);
+  });
+
+  socket.on('p2Info', function (data) {
+    console.log(socket.rooms[1].substring(9));
+    io.sockets.to('gameRoom' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
   });
 
 });

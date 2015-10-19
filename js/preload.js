@@ -1,5 +1,8 @@
 var Preload = function(game){};
 
+//to use with determining which player # client will be
+var playerNumber;
+
 Preload.prototype = {
 
     preload: function(){
@@ -28,6 +31,14 @@ Preload.prototype = {
           waitingForMatch.text = 'Looking for a match.';
         }
         }, 2000);
+
+      socket.on('player1', function () {
+        playerNumber = 1;
+      });
+
+      socket.on('player2', function () {
+        playerNumber = 2;
+      });
 
       socket.on('gameReady', function () {
         clearInterval(waiting);

@@ -3,6 +3,10 @@ body {
 }
 
 canvas {
+  margin: 0 auto;
+}
+
+canvas {
   animation: my_fade_animation 1.5s linear;
   -webkit-animation: my_fade_animation 3.0s linear;
 }
