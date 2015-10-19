@@ -42,9 +42,9 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
+    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, profile);
+    // });
   }
 ));
 
