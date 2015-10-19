@@ -9,6 +9,18 @@ var cookieSession = require('cookie-session');
 
 var routes = require('./routes/index');
 
+var mongoose = require('mongoose');
+
+mongoose.connect("mongodb://" + process.env.MONGO_DB);
+
+var userSchema = new mongoose.Schema({
+  fullName: String,
+  email: String,
+  password: String,
+  destinations: Array,
+});
+
+var User = mongoose.model('User', userSchema);
 
 var app = express();
 
@@ -42,9 +54,9 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, profile);
-    // });
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
   }
 ));
 
@@ -58,7 +70,7 @@ app.get('/auth/google',
   app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    res.send(res);
+    res.redirect('/');
   });
 
 // app.use(function (req, res, next) {
