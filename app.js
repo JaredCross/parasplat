@@ -54,6 +54,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return done(err, user);
     });
