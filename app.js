@@ -2,22 +2,14 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-//require('dotenv').load();
+require('dotenv').load();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
+var users = require('./db/database');
 
 var routes = require('./routes/index');
 
-var mongoose = require('mongoose');
-
-mongoose.connect("mongodb://" + process.env.PARASPLAT_SESSION_MONGO_DB);
-
-var userSchema = new mongoose.Schema({
-  googleId: String
-});
-
-var User = mongoose.model('User', userSchema);
 
 var app = express();
 
@@ -33,6 +25,8 @@ app.use(cookieSession({
   keys: [process.env.PARASPLAT_SESSION_KEY1,process.env.PARASPLAT_SESSION_KEY2, process.env.PARASPLAT_SESSION_KEY3]
 }));
 
+
+//passport and google-oauth
 var passport = require('passport');
 
 passport.serializeUser(function(user, done) {
@@ -51,8 +45,14 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
+    users.find({ googleId : profile.id}, function (err, data) {
+      if (err) {
+        users.insert({googleId : profile.id}, function (err, data) {
+          return done(err, data);
+        });
+      } else {
+        return done(err, user);
+      }
     });
   }
 ));
