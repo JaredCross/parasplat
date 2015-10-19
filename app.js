@@ -80,6 +80,10 @@ app.get('/auth/google',
     res.redirect('/');
   });
 
+  app.get('/testing', function (req, res) {
+    res.send(req.user);
+  });
+
 // app.use(function (req, res, next) {
 //   io.on('connection', function (socket) {
 //     req.session.clientID = socket.id;
