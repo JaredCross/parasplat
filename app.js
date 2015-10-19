@@ -74,7 +74,11 @@ app.get('/auth/google',
 
 
 
-
+  app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 
 
@@ -93,14 +97,6 @@ var gameNumber = 1;
 var gameReadyTracker = {};
 
 io.on('connection', function (socket) {
-
-  app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    socket.emit('user', {user : req.user});
-    res.redirect('/');
-  });
-
   clients.push(socket.id);
   io.emit('clients', clients);
 

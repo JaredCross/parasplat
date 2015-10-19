@@ -69,6 +69,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     Parasplat.destroyGame();
     game = false;
   }
+  console.log($http);
   // $scope.$route = $route;
   // $scope.$location = $location;
   // $scope.$routeParams = $routeParams;
@@ -88,8 +89,4 @@ app.config(function($routeProvider, $locationProvider){
         controller:"ApplicationController",
         controllerAs: "app"
       });
-});
-
-socket.on('user', function (data) {
-  console.log(data);
 });
