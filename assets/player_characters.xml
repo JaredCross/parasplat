@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6a56b2d38bc83f9e8036774b5545f400:c238d436eb1ef2f1cf488b4089467b30:242304c83538935cb87dfede819a9207$ -->
+<TextureAtlas imagePath="player_characters.png" width="1343" height="512">
+    <SubTexture name="alienGreen_climb1" x="1022" y="2" width="105" height="150" frameX="-12" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_climb2" x="1129" y="2" width="105" height="150" frameX="-12" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_duck" x="2" y="370" width="113" height="117" frameX="-8" frameY="-139" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_front" x="1236" y="2" width="105" height="150" frameX="-11" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_hit" x="343" y="359" width="110" height="151" frameX="-9" frameY="-105" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_jump" x="897" y="320" width="108" height="153" frameX="-10" frameY="-103" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_parachute" x="2" y="2" width="339" height="366" frameX="-88" frameY="-98" frameWidth="512" frameHeight="512"/>
+    <SubTexture name="alienGreen_stand" x="1131" y="154" width="107" height="147" frameX="-11" frameY="-109" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_swim1" x="798" y="2" width="110" height="155" frameX="-9" frameY="-101" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_swim2" x="684" y="162" width="111" height="158" frameX="-9" frameY="-98" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_walk1" x="1007" y="314" width="108" height="152" frameX="-10" frameY="-104" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienGreen_walk2" x="783" y="322" width="112" height="156" frameX="-8" frameY="-100" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_climb1" x="567" y="359" width="106" height="150" frameX="-11" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_climb2" x="675" y="359" width="106" height="150" frameX="-11" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_duck" x="117" y="370" width="113" height="117" frameX="-8" frameY="-139" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_front" x="1117" y="313" width="105" height="150" frameX="-11" frameY="-106" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_hit" x="455" y="359" width="110" height="151" frameX="-9" frameY="-105" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_jump" x="911" y="159" width="108" height="153" frameX="-10" frameY="-103" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_parachute" x="343" y="2" width="339" height="355" frameX="-88" frameY="-98" frameWidth="512" frameHeight="512"/>
+    <SubTexture name="alienPink_stand" x="1224" y="303" width="107" height="147" frameX="-11" frameY="-109" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_swim1" x="910" y="2" width="110" height="155" frameX="-9" frameY="-101" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_swim2" x="684" y="2" width="112" height="158" frameX="-8" frameY="-98" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_walk1" x="1021" y="159" width="108" height="152" frameX="-10" frameY="-104" frameWidth="128" frameHeight="256"/>
+    <SubTexture name="alienPink_walk2" x="797" y="162" width="112" height="156" frameX="-8" frameY="-100" frameWidth="128" frameHeight="256"/>
+</TextureAtlas>

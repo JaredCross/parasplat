@@ -12,7 +12,8 @@ Boot.prototype = {
 
     create: function(){
         // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
+        this.game.world.setBounds(0, 0, 1200, 2000);
+        this.game.stage.disableVisibilityChange = true;
         this.game.state.start("Preload");
     }
 };

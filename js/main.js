@@ -4,11 +4,20 @@ var Main = function(game){
 
 Main.prototype = {
 
+  createGround: function () {
+    this.ground = this.game.add.sprite(-10 ,game.world.height - 25, 'ground');
+    this.ground.scale.setTo(11,1);
+    this.game.physics.arcade.enable(this.ground);
+    // this.ground.enableBody = true;
+    this.ground.body.immovable = true;
+    this.ground.body.setSize(600,600);
+  },
+
   createPlayer2: function () {
     var me = this;
 
     //Add the player to the game by creating a new sprite
-    me.player = me.game.add.sprite(me.game.world.centerX, me.game.world.centerY, 'player');
+    me.player = me.game.add.sprite(me.game.world.centerX, me.game.world.centerY, 'players', 'alienPink_duck');
 
     //Set the players anchor point to be in the middle horizontally
     me.player.anchor.setTo(0.5, 0.5);
@@ -26,12 +35,12 @@ Main.prototype = {
     me.player.body.immovable = true;
   },
 
-  createPlayer: function(){
+  createPlayer1: function(){
 
     var me = this;
 
     //Add the player to the game by creating a new sprite
-    me.player = me.game.add.sprite(me.game.world.centerX / 2, me.game.world.centerY, 'player');
+    me.player = me.game.add.sprite(me.game.world.centerX / 2, 100, 'players', 'alienGreen_duck');
 
     //Set the players anchor point to be in the middle horizontally
     me.player.anchor.setTo(0.5, 0.5);
@@ -40,7 +49,10 @@ Main.prototype = {
     me.game.physics.arcade.enable(me.player);
 
     //Make the player fall by applying gravity
-    me.player.body.gravity.y = 10;
+    me.player.body.gravity.y = 100;
+
+    //set physics body size
+    me.player.body.setSize(128, 358);
 
     //Make the player collide with the game boundaries
     me.player.body.collideWorldBounds = true;
@@ -51,6 +63,7 @@ Main.prototype = {
   },
 
     create: function() {
+      var cloud1 = game.add.sprite(550, 200, 'cloud', 'cloud1');
 
        var me = this;
 
@@ -70,14 +83,22 @@ Main.prototype = {
       //Enable the Arcade physics system
       me.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+      //add ground
+      this.createGround()
+
+
       //Add the player to the screen
-      me.createPlayer();
+      me.createPlayer1();
 
+      game.camera.follow(me.player);
 
+      me.player.animations.add('falling', Phaser.Animation.generateFrameNames('alienGreen_walk', 1, 2), 5, true);
+      me.player.animations.play('falling');
 
       var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
 
       speedDisplay = game.add.text(50, 50, me.speedometer, style);
+
 
 
     },
@@ -111,6 +132,7 @@ Main.prototype = {
     gameOver: function(){
         this.game.state.start('GameOver');
     },
+
 
 
 };
