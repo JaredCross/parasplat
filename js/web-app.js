@@ -38,6 +38,7 @@ app.factory('Parasplat', function () {
     destroyGame : function () {
       game.destroy();
       socket.emit('leaveGameLobby');
+      socket.emit('leaveGameRoom');
     }
   };
 

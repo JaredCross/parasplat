@@ -113,6 +113,10 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('leaveGameRoom', function () {
+    socket.leave(socket.rooms[1].substring(9));
+  });
+
 });
 
 
