@@ -27,7 +27,11 @@ Main.prototype = {
     me.game.physics.arcade.enable(me.player2);
 
     //Make the player fall by applying gravity
-    me.player2.body.gravity.y = 100;
+    if (playerNumber === 1) {
+      me.player2.body.gravity.y = 0;
+    } else {
+      me.player2.body.gravity.y = 100;
+    }
 
     //set physics body size
     me.player2.body.setSize(128, 358);
@@ -53,7 +57,11 @@ Main.prototype = {
     me.game.physics.arcade.enable(me.player1);
 
     //Make the player fall by applying gravity
-    me.player1.body.gravity.y = 100;
+    if (playerNumber === 2) {
+      me.player1.body.gravity.y = 0;
+    } else {
+      me.player1.body.gravity.y = 100;
+    }
 
     //set physics body size
     me.player1.body.setSize(128, 358);
@@ -107,18 +115,18 @@ Main.prototype = {
       speedDisplay = game.add.text(50, 50, me.speedometer, style);
       speedDisplay.fixedToCamera = true;
 
-      //receive info from the server about the other player
-      // socket.on('p1InfoUpdate', function (data) {
-      //   console.log(data + ' for 1');
-      //   // me.player1.x = data.x;
-      //   me.player1.y = data.y;
-      // });
+      // receive info from the server about the other player
+      socket.on('p1InfoUpdate', function (data) {
+        console.log(data + ' for 1');
+        // me.player1.x = data.x;
+        me.player1.y = data.y;
+      });
 
-      // socket.on('p2InfoUpdate', function (data) {
-      //   console.log(data + ' for 2');
-      //   // me.player2.x = data.x;
-      //   me.player2.y = data.y;
-      // });
+      socket.on('p2InfoUpdate', function (data) {
+        console.log(data + ' for 2');
+        // me.player2.x = data.x;
+        me.player2.y = data.y;
+      });
 
     },
 
