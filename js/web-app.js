@@ -4,6 +4,33 @@ var game = false;
 
 //factory section
 
+app.factory('loginService', function ($http, $location) {
+  return {
+    isLogged: function () {
+      var $check = $http.post('/checkstatus');
+      return $check;
+    }
+  };
+});
+
+app.run(function ($rootScope, $location, loginService) {
+  // var routPermission = [
+  //             '/abAdmin/home',
+  //             '/abAdmin/category',
+  //             '/abAdmin/category/:id'];
+
+
+  $rootScope.$on('$routeChangeStart', function (e, current) {
+
+    //  if ( routPermission.indexOf(current.$$route.originalPath) != -1) {
+        var connected = loginService.isLogged();
+        connected.then(function (data) {
+          console.log(data);
+        });
+    // }
+  });
+});
+
 app.factory('Parasplat', function () {
 
   return {
@@ -69,7 +96,6 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     Parasplat.destroyGame();
     game = false;
   }
-  console.log($http);
   // $scope.$route = $route;
   // $scope.$location = $location;
   // $scope.$routeParams = $routeParams;

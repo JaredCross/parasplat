@@ -80,6 +80,10 @@ app.get('/auth/google',
     res.redirect('/');
   });
 
+  app.post('/checkstatus', function (req, res) {
+    res.send(req.user);
+  });
+
 
 
 // app.use(function (req, res, next) {
