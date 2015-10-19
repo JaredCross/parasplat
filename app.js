@@ -45,16 +45,15 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    socket.emit('otest', {profile : profile});
-    console.log('here');
     users.find({ googleId : profile.id}, function (err, data) {
       if (err) {
         users.insert({googleId : profile.id}, function (err, data) {
           return done(err, data);
         });
       } else {
-        return done(err, user);
+        return done(err, data);
       }
+      kjdsj = 9;
     });
   }
 ));
