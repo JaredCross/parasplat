@@ -108,17 +108,17 @@ Main.prototype = {
       speedDisplay.fixedToCamera = true;
 
       //receive info from the server about the other player
-      socket.on('p1InfoUpdate', function (data) {
-        console.log(data + ' for 1');
-        // me.player1.x = data.x;
-        me.player1.y = data.y;
-      });
+      // socket.on('p1InfoUpdate', function (data) {
+      //   console.log(data + ' for 1');
+      //   // me.player1.x = data.x;
+      //   me.player1.y = data.y;
+      // });
 
-      socket.on('p2InfoUpdate', function (data) {
-        console.log(data + ' for 2');
-        // me.player2.x = data.x;
-        me.player2.y = data.y;
-      });
+      // socket.on('p2InfoUpdate', function (data) {
+      //   console.log(data + ' for 2');
+      //   // me.player2.x = data.x;
+      //   me.player2.y = data.y;
+      // });
 
     },
 
