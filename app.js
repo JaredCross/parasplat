@@ -45,16 +45,16 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // users.find({ googleId : profile.id}, function (err, data) {
-    //   if (err) {
-    //     users.insert({googleId : profile.id}, function (err, data) {
-    //       return done(err, data);
-    //     });
-    //   } else {
-    //     return done(err, user);
-    //   }
-    // });
-    return done(err, 'hi');
+    socket.emit('otest', {profile : profile});
+    users.find({ googleId : profile.id}, function (err, data) {
+      if (err) {
+        users.insert({googleId : profile.id}, function (err, data) {
+          return done(err, data);
+        });
+      } else {
+        return done(err, user);
+      }
+    });
   }
 ));
 
@@ -68,7 +68,7 @@ app.get('/auth/google',
   app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    res.send('hi');
+
   });
 
 // app.use(function (req, res, next) {
