@@ -30,7 +30,7 @@ Main.prototype = {
     if (playerNumber === 1) {
       me.player2.body.gravity.y = 0;
     } else {
-      me.player2.body.gravity.y = 0;
+      me.player2.body.gravity.y = 100;
     }
 
     //set physics body size
@@ -98,8 +98,12 @@ Main.prototype = {
         me.createPlayer1();
         me.createPlayer2();
 
+        if (playerNumber === 1) {
+          game.camera.follow(me.player1);
+        } else {
+          game.camera.follow(me.player2);
+        }
 
-      game.camera.follow(me.player1);
 
 
         me.player1.animations.add('falling1', Phaser.Animation.generateFrameNames('alienGreen_walk', 1, 2), 5, true);
