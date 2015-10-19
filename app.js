@@ -56,6 +56,12 @@ app.get('/auth/google',
     // function will not be called.
   });
 
+  app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
 // app.use(function (req, res, next) {
 //   io.on('connection', function (socket) {
 //     req.session.clientID = socket.id;
