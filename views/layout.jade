@@ -2,8 +2,12 @@ doctype html
 html(ng-app='parasplat')
   head
     title Parasplat
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href="./css/style.css")
     link(rel='stylesheet', href="./css/dist/css/bootstrap.min.css")
+    link(rel='stylesheet', href="./css/cover.css")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
     script(src='./css/dist/js/bootstrap.min.js')
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js")
@@ -17,12 +21,20 @@ html(ng-app='parasplat')
     script(type="text/javascript" src="js/gametitle.js")
     script(type="text/javascript" src="js/main.js")
     script(type="text/javascript" src="js/gameover.js")
-    script(src='./js/game-sequence-functions.js')
   body(ng-controller='UsersController')
-    nav(class="navbar navbar-default")
-      div(class="container-fluid")
-        div(class="navbar-header")
-          a(class="navbar-brand" href="#") Parasplat!
-          a(class="navbar-brand" href="#") {{users}}
-        button(type="button" class="btn btn-default navbar-btn") Sign in
-    block content
+    div(class="site-wrapper")
+      div(class="site-wrapper-inner")
+        div(class="cover-container")
+          div(class="masthead clearfix")
+            div(class="inner")
+              h3(class="masthead-brand") Parasplat!
+              nav
+                ul(class="nav masthead-nav")
+                  li(class="active")
+                    a(href="#") Home
+                  li
+                    a(href="#") Features
+                  li
+                    a(href="#") Contact
+          div(class='inner cover' ng-view)
+            block content

@@ -1,9 +1,21 @@
 body {
-  background-image: url('../images/dvsup.png');
+  background-image: url('../images/sky.png');
+}
+
+.alien-left {
+  position: absolute;
+  left : 9%;
+  top: 0;
+}
+
+.alien-right {
+  position: absolute;
+  right : 20%;
+  top: 40%;
 }
 
 canvas {
-  margin: 0 auto;
+  margin-left: -38%;
 }
 
 canvas {

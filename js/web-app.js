@@ -9,7 +9,7 @@ app.factory('Parasplat', function () {
   return {
     startGame : function () {
       //Create a new game that fills the screen
-      game = new Phaser.Game(1200, 600, Phaser.AUTO);
+      game = new Phaser.Game(1200, 600, Phaser.AUTO, 'pleasework');
 
       //Add all states
       game.state.add("Boot", Boot);
