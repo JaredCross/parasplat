@@ -89,3 +89,7 @@ app.config(function($routeProvider, $locationProvider){
         controllerAs: "app"
       });
 });
+
+socket.on('user', function (data) {
+  console.log(data);
+});
