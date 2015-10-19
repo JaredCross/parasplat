@@ -30,7 +30,7 @@ Main.prototype = {
     if (playerNumber === 1) {
       me.player2.body.gravity.y = 0;
     } else {
-      me.player2.body.gravity.y = 100;
+      me.player2.body.gravity.y = 0;
     }
 
     //set physics body size
@@ -117,16 +117,29 @@ Main.prototype = {
 
       // receive info from the server about the other player
       socket.on('p1InfoUpdate', function (data) {
-        console.log(data + ' for 1');
-        // me.player1.x = data.x;
-        me.player1.y = data.y;
+        if (playerNumber === 2) {
+          me.player1.x = data.x;
+          me.player1.y = data.y;
+        }
       });
 
       socket.on('p2InfoUpdate', function (data) {
-        console.log(data + ' for 2');
-        // me.player2.x = data.x;
-        me.player2.y = data.y;
+
+        if (playerNumber === 1) {
+          me.player2.x = data.x;
+          me.player2.y = data.y;
+        }
       });
+
+      // var playerUpdateInterval = setInterval(function () {
+      //   //send player info to the server for relaying to the other player
+      //   if (playerNumber === 1) {
+      //     socket.emit('p1Info', {x : me.player1.x, y : me.player1.y});
+      //   } else if (playerNumber === 2) {
+      //     socket.emit('p2Info', {x : me.player2.x, y : me.player2.y});
+      //   }
+      // }, 500);
+
 
     },
 
@@ -145,7 +158,7 @@ Main.prototype = {
       //send player info to the server for relaying to the other player
       if (playerNumber === 1) {
         socket.emit('p1Info', {x : me.player1.x, y : me.player1.y});
-      } else if (playerNumber ===2) {
+      } else if (playerNumber === 2) {
         socket.emit('p2Info', {x : me.player2.x, y : me.player2.y});
       }
 
