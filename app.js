@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+require('dotenv').load();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
@@ -20,8 +21,40 @@ server.listen(3000);
 //cookie-session
 app.use(cookieSession({
   name: 'session',
-  keys: ['SESSION_KEY1', 'SESSION_KEY2', 'SESSION_KEY3']
+  keys: [process.env.SESSION_KEY1,process.env.SESSION_KEY2, process.env.SESSION_KEY3]
 }));
+
+var passport = require('passport');
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
+  function(req, res){
+    console.log(res);
+    // The request will be redirected to Google for authentication, so this
+    // function will not be called.
+  });
 
 // app.use(function (req, res, next) {
 //   io.on('connection', function (socket) {
