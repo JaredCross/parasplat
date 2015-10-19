@@ -35,6 +35,7 @@ app.use(cookieSession({
 //socket.io client connections/disconnects
 var clients = [];
 var gameNumber = 1;
+var gameReadyTracker = {};
 
 io.on('connection', function (socket) {
   clients.push(socket.id);
@@ -100,8 +101,16 @@ io.on('connection', function (socket) {
   });
 
   socket.on('p2Info', function (data) {
-    console.log(socket.rooms[1].substring(9));
-    io.sockets.to('gameRoom' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
+    io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
+  });
+
+  socket.on('pressedStart', function (data) {
+    if (gameReadyTracker[socket.rooms[1].substring(9)]) {
+        delete gameReadyTracker[socket.rooms[1].substring(9)];
+        io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('receivedReady');
+    } else {
+      gameReadyTracker[socket.rooms[1].substring(9)] = 1;
+    }
   });
 
 });
