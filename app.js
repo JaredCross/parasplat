@@ -37,14 +37,15 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 passport.use(new GoogleStrategy({
     clientID: process.env.PARASPLAT_SESSION_GOOGLE_CLIENT_ID,
     clientSecret: process.env.PARASPLAT_SESSION_GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://parasplat.jaredcross.com/auth/google/callback"
+    callbackURL: "https://parasplat.jaredcross.com/auth/google/callback",
+    passReqToCallback : true
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(request, accessToken, refreshToken, profile, done) {
     users.find({ googleId : profile.id}, function (err, data) {
       if (err) {
         users.insert({googleId : profile.id}, function (err, data) {
@@ -59,16 +60,16 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'] }),
-  function(req, res){
-    // The request will be redirected to Google for authentication, so this
-    // function will not be called.
-  });
+  passport.authenticate('google', { scope:
+    ['https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile']
+  }));
+
+
 
   app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-
+    res.redirect('/');
   });
 
 // app.use(function (req, res, next) {
