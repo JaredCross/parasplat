@@ -17,6 +17,9 @@ var p1Alive = {};
 var p2Alive = {};
 var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
 
+var newGameButton;
+var gameOverMsg;
+
 Main.prototype = {
 
   createGround: function () {
@@ -231,28 +234,40 @@ Main.prototype = {
       //gameover
       if(p1Alive.ready && p2Alive.ready) {
         if (!p1Alive.alive && !p2Alive.alive) {
-          me.game.add.text(600, 600, 'Everybody Lose!', style);
-          game.add.button(450, 200, 'button', newGame);
+          gameOverMsg = me.game.add.text(600, 600, 'Everybody Lose!', style);
+          newGameButton=game.add.button(450, 200, 'button', newGame);
+          gameoverMsg.fixToCamera = true;
+          newGameButton.fixToCamera = true;
         } else if (!p1Alive.alive && p2Alive.alive) {
           if (playerNumber === 2) {
-            me.game.add.text(600, 600, 'You win!', style);
-            game.add.button(450, 200, 'button', newGame);
+            gameOverMsg = me.game.add.text(600, 600, 'You win!', style);
+            newGameButton=game.add.button(450, 200, 'button', newGame);
+            gameoverMsg.fixToCamera = true;
+            newGameButton.fixToCamera = true;
           } else {
-            me.game.add.text(600, 600, 'You lost =(', style);
-            game.add.button(450, 200, 'button', newGame);
+            gameOverMsg = me.game.add.text(600, 600, 'You lost =(', style);
+            newGameButton=game.add.button(450, 200, 'button', newGame);
+            gameoverMsg.fixToCamera = true;
+            newGameButton.fixToCamera = true;
           }
 
         } else if (p1Alive.alive && !p2Alive.alive) {
             if (playerNumber === 1) {
-              me.game.add.text(600, 600, 'You win!', style);
-              game.add.button(450, 200, 'button', newGame);
+              gameOverMsg = me.game.add.text(600, 600, 'You win!', style);
+              newGameButton=game.add.button(450, 200, 'button', newGame);
+              gameoverMsg.fixToCamera = true;
+              newGameButton.fixToCamera = true;
             } else {
-              me.game.add.text(600, 600, 'You lost =(', style);
-              game.add.button(450, 200, 'button', newGame);
+              gameOverMsg = me.game.add.text(600, 600, 'You lost =(', style);
+              newGameButton=game.add.button(450, 200, 'button', newGame);
+              gameoverMsg.fixToCamera = true;
+              newGameButton.fixToCamera = true;
             }
         } else if (p1Alive.alive && p2Alive.alive) {
-            me.game.add.text(600, 600, 'Everybody Win!', style);
-            game.add.button(450, 200, 'button', newGame);
+            gameOverMsg = me.game.add.text(600, 600, 'Everybody Win!', style);
+            newGameButton=game.add.button(450, 200, 'button', newGame);
+            gameoverMsg.fixToCamera = true;
+            newGameButton.fixToCamera = true;
 
         }
 
