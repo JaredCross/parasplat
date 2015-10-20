@@ -1,5 +1,6 @@
 var game = false;
 var loggedIn = false;
+var userData;
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
@@ -19,7 +20,10 @@ app.run(function ($rootScope, $location, loginService) {
 
         var connected = loginService.isLogged();
         connected.then(function (data) {
-          $rootScope.user = data.data;
+          if( data.data.email) {
+            loggedIn = true;
+            userData = data.data;
+          }
         });
   });
 });
@@ -88,6 +92,7 @@ app.controller('UsersController', function ($scope, $rootScope, Parasplat) {
 
   $scope.$watch('loggedIn', function (newValue, oldValue) {
     $scope.loggedIn = loggedIn;
+    $scoper.user = userData;
   });
 
 
