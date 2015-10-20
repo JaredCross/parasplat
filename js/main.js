@@ -198,12 +198,12 @@ Main.prototype = {
       if (playerNumber === 1) {
         playerDisplayA = game.add.text(300, 50, 'You!', style);
         playerDisplayA.fixedToCamera = true;
-        playerDisplayB = game.add.text(900, 50, 'Them!', style);
+        playerDisplayB = game.add.text(800, 50, 'Them!', style);
         playerDisplayB.fixedToCamera = true;
       } else {
         playerDisplayA = game.add.text(300, 50, 'Them!', style);
         playerDisplayA.fixedToCamera = true;
-        playerDisplayB = game.add.text(900, 50, 'You!', style);
+        playerDisplayB = game.add.text(800, 50, 'You!', style);
         playerDisplayB.fixedToCamera = true;
       }
 
@@ -224,11 +224,11 @@ Main.prototype = {
 
       this.game.physics.arcade.collide(me.player1, me.ground, function () {
           stopTimer = true;
-          if (playerNumber === 1 && me.player1.frameName != 'alienGreen_parachute') {
+          if (playerNumber === 1 && me.player1.gravity.y != 30) {
               finalTime = timer1.text;
               me.player1.frameName = 'alienGreen_climb1';
               socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
-          } else if (playerNumber === 1) {
+          } else if (playerNumber === 1 && me.player1.framName === 'alienGreen_parachute') {
               finalTime = timer1.text;
               me.player1.frameName = 'alienGreen_duck';
               socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
@@ -237,7 +237,7 @@ Main.prototype = {
 
       this.game.physics.arcade.collide(me.player2, me.ground, function () {
         stopTimer = true;
-        if (playerNumber === 2 && me.player2.frameName != 'alienPink_parachute') {
+        if (playerNumber === 2 && me.player2.gravity != 30) {
             finalTime = timer2.text;
             me.player2.frameName = 'alienPink_climb1';
             socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
@@ -249,12 +249,14 @@ Main.prototype = {
       });
 
       //parachute deployment
-      if (me.parachuteButton.isDown) {
+      if (me.parachuteButton.onDown) {
         if (playerNumber === 1) {
+          me.player1.body.gravity.y = 30;
           me.player1.animations.stop();
           me.player1.frameName = 'alienGreen_parachute';
           socket.emit('p1Parachute');
-        } else {
+        } else if (playerNumber === 2){
+          me.player2.body.gravity.y = 30;
           me.player2.animations.stop();
           me.player2.frameName = 'alienPink_parachute';
           socket.emit('p2Parachute');
