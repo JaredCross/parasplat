@@ -1,4 +1,5 @@
 var game = false;
+var loggedIn = false;
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
@@ -84,12 +85,10 @@ app.factory('Parasplat', function () {
 
 //CONTROLLERS
 app.controller('UsersController', function ($scope, $rootScope, Parasplat) {
-  $rootScope.user.email = true;
-  if ($rootScope.user.email) {
-    $scope.loggedIn = true;
-  } else {
-    $scope.loggedIn = false;
-  }
+
+  $scope.$watch('loggedIn', function (newValue, oldValue) {
+    $scope.loggedIn = loggedIn;
+  });
 
 
 

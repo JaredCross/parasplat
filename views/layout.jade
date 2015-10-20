@@ -33,7 +33,7 @@ html(ng-app='parasplat')
                 ul(class="nav masthead-nav")
                   li(class="active")
                     a(href="#") Home
-                  li(ng-show='loggedIn' class='ng-hide')
+                  li(ng-show='!loggedIn')
                     a(href="/auth/google") Google Sign In!
                   li(ng-show='loggedIn')
                     a(href="#/user") {{user.displayname}}
