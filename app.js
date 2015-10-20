@@ -234,6 +234,13 @@ io.on('connection', function (socket) {
 
   });
 
+  //log to db
+  socket.on('gamePlayed', function (data) {
+    users.findOne({email : data.userData.email}, function (userDoc) {
+      users.insert({gamesPlayed : userDoc.gamesPlayed + 1 });
+    });
+  });
+
 });
 
 

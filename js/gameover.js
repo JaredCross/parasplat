@@ -4,6 +4,10 @@ var GameOver = function(game){};
 GameOver.prototype = {
 
     create: function(){
+
+      if ($scope.user) {
+        socket.emit('gamePlayed', {userData : $scope.user});
+      }
       var me = this;
       this.game.stage.backgroundColor = '479cde';
 
