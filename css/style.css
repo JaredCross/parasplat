@@ -2,6 +2,7 @@ body {
   background-image: url('../images/sky.png');
 }
 
+
 .alien-left {
   position: absolute;
   left : 9%;

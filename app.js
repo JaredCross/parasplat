@@ -84,14 +84,14 @@ app.get('/auth/google',
     if (req.user) {
       users.findOne({email : req.user.email}, function (err, userInfo) {
         if (userInfo) {
-          res.send(userInfo);
+          res.send(req.user);
         } else {
           users.insert({
             email : req.user.email,
             gamesPlayed : 0,
             gamesWon: 0
           }, function (err, userInfo) {
-            res.send(userInfo);
+            res.send(req.user);
           });
           res.send(req.user);
         }
@@ -99,6 +99,12 @@ app.get('/auth/google',
     } else {
       res.send(req.user);
     }
+  });
+
+  app.post('/getdata', function (req, res) {
+    users.findOne({email : req.user.email}, function (err, userInfo) {
+      res.send(userInfo);
+    });
   });
 
 

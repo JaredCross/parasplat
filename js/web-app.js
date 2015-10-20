@@ -98,6 +98,13 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     Parasplat.destroyGame();
     game = false;
   }
+
+  $http.post("/getdata")
+    .success(function (data) {
+
+        $scope.user.data = data; // must be within success function to automatically call $apply
+        console.log($scope.user.data);
+    });
   // $scope.$route = $route;
   // $scope.$location = $location;
   // $scope.$routeParams = $routeParams;
@@ -116,5 +123,10 @@ app.config(function($routeProvider, $locationProvider){
         templateUrl:"/partials/game.html",
         controller:"ApplicationController",
         controllerAs: "app"
-      });
+      }).when("/user",
+        {
+          templateUrl:"/partials/user.html",
+          controller:"ApplicationController",
+          controllerAs: "app"
+        });
 });
