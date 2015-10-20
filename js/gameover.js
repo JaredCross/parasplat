@@ -6,6 +6,7 @@ GameOver.prototype = {
     create: function(){
 
       if (userData) {
+        console.log(userData);
         socket.emit('gamePlayed', {userData : userData});
       }
       var me = this;
