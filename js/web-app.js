@@ -104,16 +104,14 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     Parasplat.destroyGame();
     game = false;
   }
-
+  
   $http.post("/getdata")
     .success(function (data) {
-        $scope.user.data = data; // must be within success function to automatically call $apply
+        $scope.user.data = data;
         userData = $scope.user.data;
         console.log($scope.user.data);
     });
-  // $scope.$route = $route;
-  // $scope.$location = $location;
-  // $scope.$routeParams = $routeParams;
+
 });
 
 //config section
