@@ -237,10 +237,7 @@ io.on('connection', function (socket) {
   //log to db
   socket.on('playedGame', function (data) {
     var newCount = data.gamesPlayed + 1;
-    users.findOne({'email' : data.email}, function (userDoc) {
-      users.update({gamesPlayed : newCount });
-    });
-  });
+    users.update({_id : data._id}, {$set : {gamesPlayed : newCount}});
 
 });
 
