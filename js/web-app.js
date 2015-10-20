@@ -105,12 +105,14 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     game = false;
   }
   
-  $http.post("/getdata")
-    .success(function (data) {
-        $scope.user.data = data;
-        userData = $scope.user.data;
-        console.log($scope.user.data);
-    });
+  if ($scope.user) {
+    $http.post("/getdata")
+      .success(function (data) {
+          $scope.user.data = data;
+          userData = $scope.user.data;
+          console.log($scope.user.data);
+      });
+  }
 
 });
 
