@@ -81,18 +81,20 @@ app.get('/auth/google',
   });
 
   app.post('/checkstatus', function (req, res) {
-    if (req.user.data.email) {
-      users.insert({
-        displayName : req.user.data.displayName,
-        email : req.user.data.email,
-        gamesPlayed : 0,
-        gamesWon: 0
-      }, function (err, data) {
-        res.send(data);
-      });
-    } else {
-      res.send('false');
-    }
+    users.insert({test:test});
+    // if (req.user.data.email) {
+    //   users.insert({
+    //     displayName : req.user.data.displayName,
+    //     email : req.user.data.email,
+    //     gamesPlayed : 0,
+    //     gamesWon: 0
+    //   }, function (err, data) {
+    //     res.send(data);
+    //   });
+    // } else {
+    //   res.send('false');
+    // }
+    res.send(req.user);
   });
 
 
