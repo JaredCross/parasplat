@@ -167,6 +167,7 @@ Main.prototype = {
       });
 
       socket.on('p1GroundUpdate', function (data) {
+        console.log(data + ' from 1');
         // if (playerNumber === 2) {
           if (data.alive) {
             me.player1.animations.stop();
@@ -181,6 +182,7 @@ Main.prototype = {
       });
 
       socket.on('p2GroundUpdate', function (data) {
+        console.log(data + ' from 2');
         // if (playerNumber === 1) {
           if (data.alive) {
             me.player2.animations.stop();
