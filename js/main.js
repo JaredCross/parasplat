@@ -15,6 +15,7 @@ var gameOver1 = false;
 var gameOver2 = false;
 var p1Alive = {};
 var p2Alive = {};
+var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
 
 Main.prototype = {
 
@@ -89,7 +90,7 @@ Main.prototype = {
 
     create: function() {
       //timer
-      var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
+
       timer1 = game.add.text(100, 50, '00:00:00', style);
       timer1.fixedToCamera = true;
 
