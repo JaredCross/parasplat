@@ -81,7 +81,7 @@ app.get('/auth/google',
   });
 
   app.post('/checkstatus', function (req, res) {
-    if (req.user.data.email) {
+    if (req.user) {
       users.findOne({email : req.user.data.email}, function (err, userInfo) {
         if (userInfo) {
           res.send(userInfo);
