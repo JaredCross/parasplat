@@ -224,28 +224,28 @@ Main.prototype = {
 
       this.game.physics.arcade.collide(me.player1, me.ground, function () {
           stopTimer = true;
-          if (playerNumber === 1 && me.player1.body.gravity.y != 30) {
-              finalTime = timer1.text;
-              me.player1.frameName = 'alienGreen_climb1';
-              socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
-          } else if (playerNumber === 1) {
+          // if (playerNumber === 1 && me.player1.body.gravity.y != 30) {
+          //     finalTime = timer1.text;
+          //     me.player1.frameName = 'alienGreen_climb1';
+          //     socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
+          // } else if (playerNumber === 1) {
               finalTime = timer1.text;
               me.player1.frameName = 'alienGreen_duck';
               socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
-          }
+          // }
       });
 
       this.game.physics.arcade.collide(me.player2, me.ground, function () {
         stopTimer = true;
-        if (playerNumber === 2 && me.player2.body.gravity != 30) {
-            finalTime = timer2.text;
-            me.player2.frameName = 'alienPink_climb1';
-            socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
-        } else if (playerNumber === 2){
+        // if (playerNumber === 2 && me.player2.body.gravity != 30) {
+        //     finalTime = timer2.text;
+        //     me.player2.frameName = 'alienPink_climb1';
+        //     socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
+        // } else if (playerNumber === 2){
             finalTime = timer2.text;
             me.player2.frameName = 'alienPink_duck';
             socket.emit('p2Ground', {finalTime: finalTime, alive : 'true'});
-        }
+        // }
       });
 
       //parachute deployment
