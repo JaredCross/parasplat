@@ -82,16 +82,23 @@ app.get('/auth/google',
 
   app.post('/checkstatus', function (req, res) {
     if (req.user) {
-          // users.insert({
-          //   displayName : req.user.data.displayName,
-          //   email : req.user.data.email,
-          //   gamesPlayed : 0,
-          //   gamesWon: 0
-          // }, function (err, userInfo) {
-          //   res.send(userInfo);
-          // });
-          res.send(req.user);
+      var email = req.user.data.email;
+      var displayName = req.user.data.displayName;
+      users.findOne({email : email}, function (err, userInfo) {
+        if (userInfo) {
+          res.send(userInfo);
+        } else {
+          users.insert({
+            displayName : displayName,
+            email : email,
+            gamesPlayed : 0,
+            gamesWon: 0
+          }, function (err, userInfo) {
+            res.send(userInfo);
+          });
         }
+      });
+    }
   });
 
 
