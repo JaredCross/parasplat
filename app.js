@@ -236,8 +236,8 @@ io.on('connection', function (socket) {
 
   //log to db
   socket.on('gamePlayed', function (data) {
-    var newCount = data.gamesPlayed + 1;
-    users.findOne({email : data.userData.email}, function (userDoc) {
+    var newCount = data.dataUpdate.gamesPlayed + 1;
+    users.findOne({email : data.dataUpdate.email}, function (userDoc) {
       users.update({gamesPlayed : newCount });
     });
   });
