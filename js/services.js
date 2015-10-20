@@ -1,15 +1,12 @@
-var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
-
-app.factory('loginService', function ($http, $location) {
+angular.module('parasplat.services', [])
+.factory('loginService', function ($http, $location) {
   return {
     isLogged: function () {
       var $check = $http.post('/checkstatus');
       return $check;
     }
   };
-});
-
-app.run(function ($rootScope, $location, loginService, $scope) {
+}).run(function ($rootScope, $location, loginService, $scope) {
   // var routPermission = [
   //             '/abAdmin/home',
   //             '/abAdmin/category',
@@ -28,9 +25,7 @@ app.run(function ($rootScope, $location, loginService, $scope) {
         });
     // }
   });
-});
-
-app.factory('Parasplat', function () {
+}).factory('Parasplat', function () {
 
   return {
     startGame : function () {

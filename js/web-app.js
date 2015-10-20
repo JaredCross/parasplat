@@ -1,4 +1,4 @@
-var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
+var app = angular.module('parasplat', ['ngRoute', 'ngAnimate', 'parasplat.services']);
 
 var game = false;
 
