@@ -13,15 +13,17 @@ app.factory('loginService', function ($http, $location) {
 });
 
 app.run(function ($rootScope, $location, loginService) {
-  $rootScope.user = 'me';
 
   $rootScope.$on('$routeChangeStart', function (e, current) {
 
         var connected = loginService.isLogged();
         connected.then(function (data) {
           if(data.data.email) {
+            console.log(data.data);
             $rootScope.loggedIn = true;
             $rootScope.user = data;
+          } else {
+            $rootScope.loggedIn = false;
           }
         });
   });
