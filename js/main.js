@@ -13,6 +13,8 @@ var stopTimer= false;
 var finalTime;
 var gameOver1 = false;
 var gameOver2 = false;
+var p1Alive = {};
+var p2Alive = {};
 
 Main.prototype = {
 
@@ -168,6 +170,8 @@ Main.prototype = {
 
       socket.on('p1GroundUpdate', function (data) {
         console.log(data.alive + ' from 1');
+        p1Alive.ready = true;
+        p1Alive.alive = data.alive;
         // if (playerNumber === 2) {
         if (data.alive === false) {
           me.player1.frameName = 'alienGreen_climb1';
@@ -185,6 +189,8 @@ Main.prototype = {
       });
 
       socket.on('p2GroundUpdate', function (data) {
+        p2Alive.ready = true;
+        p2Alive.alive = data.alive;
         console.log(data.alive + ' from 2');
         // if (playerNumber === 1) {
           if (data.alive) {
@@ -221,6 +227,21 @@ Main.prototype = {
     update: function() {
       var me = this;
 
+      if (p1Alive.ready) {
+        if (p1Alive.alive) {
+          me.player1.frameName = 'alienGreen_duck';
+        } else {
+          me.player1.frameName = 'alienGreen_climb1';
+        }
+      }
+
+      if (p2Alive.ready) {
+        if (p2Alive.alive) {
+          me.player2.frameName = 'alienPink_duck';
+        } else {
+          me.player2.frameName = 'alienPink_climb1';
+        }
+      }
 
       //timer
       if (!stopTimer) {
