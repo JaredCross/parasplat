@@ -198,12 +198,12 @@ Main.prototype = {
       if (playerNumber === 1) {
         playerDisplayA = game.add.text(300, 50, 'You!', style);
         playerDisplayA.fixedToCamera = true;
-        playerDisplayB = game.add.text(800, 50, 'Them!', style);
+        playerDisplayB = game.add.text(1000, 50, 'Them!', style);
         playerDisplayB.fixedToCamera = true;
       } else {
         playerDisplayA = game.add.text(300, 50, 'Them!', style);
         playerDisplayA.fixedToCamera = true;
-        playerDisplayB = game.add.text(800, 50, 'You!', style);
+        playerDisplayB = game.add.text(1000, 50, 'You!', style);
         playerDisplayB.fixedToCamera = true;
       }
 
@@ -224,11 +224,11 @@ Main.prototype = {
 
       this.game.physics.arcade.collide(me.player1, me.ground, function () {
           stopTimer = true;
-          if (playerNumber === 1 && me.player1.gravity.y != 30) {
+          if (playerNumber === 1 && me.player1.body.gravity.y != 30) {
               finalTime = timer1.text;
               me.player1.frameName = 'alienGreen_climb1';
               socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
-          } else if (playerNumber === 1 && me.player1.framName === 'alienGreen_parachute') {
+          } else if (playerNumber === 1) {
               finalTime = timer1.text;
               me.player1.frameName = 'alienGreen_duck';
               socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
@@ -237,7 +237,7 @@ Main.prototype = {
 
       this.game.physics.arcade.collide(me.player2, me.ground, function () {
         stopTimer = true;
-        if (playerNumber === 2 && me.player2.gravity != 30) {
+        if (playerNumber === 2 && me.player2.body.gravity != 30) {
             finalTime = timer2.text;
             me.player2.frameName = 'alienPink_climb1';
             socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
