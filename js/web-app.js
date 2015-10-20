@@ -62,9 +62,9 @@ app.factory('Parasplat', function () {
 
 
     destroyGame : function () {
-      game.destroy();
       socket.emit('leaveGameLobby');
       socket.emit('leaveGameRoom');
+      game.destroy();
     }
   };
 
@@ -79,7 +79,11 @@ app.controller('UsersController', function ($scope, Parasplat) {
   var socket = io();
   socket.on('clients', function (clients) {
     $scope.$apply(function () {
-      $scope.users = clients.length + ' users online';
+      if (clients.length === 1) {
+        $scope.users = clients.length + ' user online';
+      } else {
+        $scope.users = clients.length + ' users online';
+      }
     });
   });
 

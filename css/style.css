@@ -1,7 +1,12 @@
 body {
   background-image: url('../images/sky.png');
 }
-
+html, body {
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
 
 .alien-left {
   position: absolute;

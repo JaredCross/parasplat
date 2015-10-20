@@ -2,6 +2,18 @@ var Main = function(game){
 
 };
 
+
+var timer1;
+var timer2;
+var milliseconds = 0;
+var seconds = 0;
+var minutes = 0;
+var timeNow;
+var stopTimer= false;
+var finalTime;
+var gameOver1 = false;
+var gameOver2 = false;
+
 Main.prototype = {
 
   createGround: function () {
@@ -74,15 +86,22 @@ Main.prototype = {
   },
 
     create: function() {
-      // var cloud1 = game.add.sprite(550, 200, 'cloud', 'cloud1');
+      //timer
+      var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
+      timer1 = game.add.text(100, 50, '00:00:00', style);
+      timer1.fixedToCamera = true;
+
+      timeNow = game.time.time;
+
+      timer2 = game.add.text(800, 50, '00:00:00', style);
+      timer2.fixedToCamera = true;
 
        var me = this;
 
-       //Enable cursor keys so we can create some controls
+       //Enable cursor keys so we can create some controls space for parachute
        me.cursors = me.game.input.keyboard.createCursorKeys();
+       this.parachuteButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-      //Set the initial score
-      me.speedometer = 0;
 
       //Set the background colour to blue
       me.game.stage.backgroundColor = '479cde';
@@ -114,75 +133,155 @@ Main.prototype = {
 
 
 
-      var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: 100, align: "center" };
 
-      speedDisplay = game.add.text(50, 50, me.speedometer, style);
-      speedDisplay.fixedToCamera = true;
 
       // receive info from the server about the other player
       socket.on('p1InfoUpdate', function (data) {
         if (playerNumber === 2) {
           me.player1.x = data.x;
           me.player1.y = data.y;
+          timer1.setText(data.timer);
         }
       });
 
       socket.on('p2InfoUpdate', function (data) {
-
         if (playerNumber === 1) {
           me.player2.x = data.x;
           me.player2.y = data.y;
+          timer2.setText(data.timer);
         }
       });
 
-      // var playerUpdateInterval = setInterval(function () {
-      //   //send player info to the server for relaying to the other player
-      //   if (playerNumber === 1) {
-      //     socket.emit('p1Info', {x : me.player1.x, y : me.player1.y});
-      //   } else if (playerNumber === 2) {
-      //     socket.emit('p2Info', {x : me.player2.x, y : me.player2.y});
-      //   }
-      // }, 500);
+      socket.on('p1ParachuteUpdate', function () {
+        if (playerNumber === 2) {
+          me.player1.animations.stop();
+          me.player1.frameName = 'alienGreen_parachute';
+        }
+      });
 
+      socket.on('p2ParachuteUpdate', function () {
+        if (playerNumber === 1) {
+          me.player2.animations.stop();
+          me.player2.frameName = 'alienPink_parachute';
+        }
+      });
+
+      socket.on('p1GroundUpdate', function (data) {
+        gameOver1 = true;
+        if (playerNumber === 2) {
+          if (data.alive) {
+            me.player1.animations.stop();
+            me.player1.frameName = 'alienGreen_duck';
+          } else {
+            me.player1.animations.stop();
+            me.player1.frameName = 'alienGreen_climb1';
+          }
+        }
+      });
+
+      socket.on('p2GroundUpdate', function (data) {
+        gameOver2 = true;
+        if (playerNumber === 1) {
+          if (data.alive) {
+            me.player2.animations.stop();
+            me.player2.frameName = 'alienPink_duck';
+          } else {
+            me.player2.animations.stop();
+            me.player2.frameName = 'alienPink_climb1';
+          }
+        }
+      });
+
+      var playerDisplayA;
+      var playerDisplayB;
+
+      if (playerNumber === 1) {
+        playerDisplayA = game.add.text(300, 50, 'You!', style);
+        playerDisplayA.fixedToCamera = true;
+        playerDisplayB = game.add.text(900, 50, 'Them!', style);
+        playerDisplayB.fixedToCamera = true;
+      } else {
+        playerDisplayA = game.add.text(300, 50, 'Them!', style);
+        playerDisplayA.fixedToCamera = true;
+        playerDisplayB = game.add.text(900, 50, 'You!', style);
+        playerDisplayB.fixedToCamera = true;
+      }
 
     },
+
+
 
     update: function() {
       var me = this;
 
-      this.game.physics.arcade.collide(me.player, me.ground, function () {
-        if (playerNumber === 1) {
-          me.player1.frameName = 'alienGreen_duck';
-        } else {
-          me.player2.frameName = 'alienPink_duck';
-        }
 
+      //timer
+      if (!stopTimer) {
+        updateTimer();
+      }
+
+
+
+      this.game.physics.arcade.collide(me.player1, me.ground, function () {
+          stopTimer = true;
+          if (playerNumber === 1 && me.player1.frameName != 'alienGreen_parachute') {
+              finalTime = timer1.text;
+              me.player1.frameName = 'alienGreen_climb1';
+              socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
+          } else if (playerNumber === 1) {
+              finalTime = timer1.text;
+              me.player1.frameName = 'alienGreen_duck';
+              socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
+          }
       });
 
+      this.game.physics.arcade.collide(me.player2, me.ground, function () {
+        stopTimer = true;
+        if (playerNumber === 2 && me.player2.frameName != 'alienPink_parachute') {
+            finalTime = timer2.text;
+            me.player2.frameName = 'alienPink_climb1';
+            socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
+        } else if (playerNumber === 2){
+            finalTime = timer2.text;
+            me.player2.frameName = 'alienPink_duck';
+            socket.emit('p2Ground', {finalTime: finalTime, alive : 'true'});
+        }
+      });
+
+      //parachute deployment
+      if (me.parachuteButton.isDown) {
+        if (playerNumber === 1) {
+          me.player1.animations.stop();
+          me.player1.frameName = 'alienGreen_parachute';
+          socket.emit('p1Parachute');
+        } else {
+          me.player2.animations.stop();
+          me.player2.frameName = 'alienPink_parachute';
+          socket.emit('p2Parachute');
+        }
+      }
+
+
       //send player info to the server for relaying to the other player
-      if (playerNumber === 1) {
-        socket.emit('p1Info', {x : me.player1.x, y : me.player1.y});
-      } else if (playerNumber === 2) {
-        socket.emit('p2Info', {x : me.player2.x, y : me.player2.y});
-      }
+        if (playerNumber === 1) {
+          socket.emit('p1Info', {x : me.player1.x, y : me.player1.y, timer: timer1.text});
+        } else if (playerNumber === 2) {
+          socket.emit('p2Info', {x : me.player2.x, y : me.player2.y, timer : timer2.text});
+        }
+      //
+      // //Movement and Parachute
+      // if(me.cursors.up.isDown) {
+      //     me.player1.body.velocity.y -= 10;
+      // }
+      // if(me.cursors.left.isDown) {
+      //   me.player1.body.velocity.x -= 5;
+      // }
+      // if(me.cursors.right.isDown) {
+      //   me.player1.body.velocity.x += 5;
+      // }
 
 
-      //Make the sprite jump when the up key is pushed
-      if(me.cursors.up.isDown) {
-          me.player1.body.velocity.y -= 10;
-      }
-      if(me.cursors.left.isDown) {
-        me.player1.body.velocity.x -= 5;
-      }
-      if(me.cursors.right.isDown) {
-        me.player1.body.velocity.x += 5;
-      }
 
-      if(me.player1.body.velocity.y > 0) {
-        speedDisplay.text = 'Speed ' + Math.round(me.player1.body.speed);
-     } else {
-       speedDisplay.text = 'Speed ' + '0';
-     }
 
     },
 
@@ -194,3 +293,31 @@ Main.prototype = {
 
 
 };
+
+function updateTimer() {
+
+
+    minutes = Math.floor((game.time.time - timeNow) / 60000) % 60;
+
+    seconds = Math.floor((game.time.time - timeNow) / 1000) % 60;
+
+    milliseconds = Math.floor(game.time.time - timeNow) % 100;
+
+    //If any of the digits becomes a single digit number, pad it with a zero
+    if (milliseconds < 10)
+        milliseconds = '0' + milliseconds;
+
+    if (seconds < 10)
+        seconds = '0' + seconds;
+
+    if (minutes < 10)
+        minutes = '0' + minutes;
+
+        if (playerNumber === 1) {
+          timer1.setText('Stopwatch: ' + minutes + ':'+ seconds + ':' + milliseconds);
+        } else {
+          timer2.setText('Stopwatch: ' + minutes + ':'+ seconds + ':' + milliseconds);
+        }
+
+
+}

@@ -182,16 +182,42 @@ io.on('connection', function (socket) {
     }
   });
 
+  //coordinates relay
   socket.on('p1Info', function (data) {
-    io.sockets.to('gameRoom ' + socket.id).emit('p1InfoUpdate', data);
+    io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1InfoUpdate', data);
   });
 
   socket.on('p2Info', function (data) {
-    if (socket.rooms[1]) {
+    // if (socket.rooms[1]) {
       io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
+    // }
+  });
+
+  //parachute relay
+  socket.on('p1Parachute', function (data) {
+    io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1ParachuteUpdate');
+  });
+
+  socket.on('p2Parachute', function (data) {
+    // if (socket.rooms[1]) {
+      io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2ParachuteUpdate');
+    // }
+  });
+
+  //on the ground update
+  socket.on('p1Ground', function (data) {
+    if (socket.rooms[1]) {
+      io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1GroundUpdate', data);
     }
   });
 
+  socket.on('p2Ground', function (data) {
+    if (socket.rooms[1]) {
+      io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2GroundUpdate', data);
+    }
+  });
+
+//pressing ready to play
   socket.on('pressedStart', function (data) {
     if (gameReadyTracker[socket.rooms[1].substring(9)]) {
         delete gameReadyTracker[socket.rooms[1].substring(9)];
@@ -202,9 +228,9 @@ io.on('connection', function (socket) {
   });
 
   socket.on('leaveGameRoom', function () {
-    if (socket.rooms[1]) {
+    // if (socket.rooms[1]) {
       socket.leave(socket.rooms[1].substring(9));
-    }
+    // }
 
   });
 
