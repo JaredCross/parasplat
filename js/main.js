@@ -230,14 +230,14 @@ Main.prototype = {
 
         this.game.physics.arcade.collide(me.player1, me.ground, function () {
             stopTimer = true;
-            if (me.player1.body.gravity.y != 30) {
+            if (me.player1.body.gravity.y != 30 && !gameOver1) {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_climb1';
                 if (!gameOver1) {
                   socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
                   gameOver1 = true;
                 }
-            } else {
+            } else if (!gameOver1) {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_duck';
                 if (!gameOver1) {
@@ -254,14 +254,14 @@ Main.prototype = {
         this.game.physics.arcade.collide(me.player2, me.ground, function () {
 
           stopTimer = true;
-          if (me.player2.body.gravity != 30) {
+          if (me.player2.body.gravity.y != 30 && !gameOver2) {
               finalTime = timer2.text;
               me.player2.frameName = 'alienPink_climb1';
               if (!gameOver2) {
                 socket.emit('p2Ground', {finalTime : finalTime, alive : false});
                 gameOver2 = true;
               }
-          } else {
+          } else if (!gameOver2) {
               finalTime = timer2.text;
               me.player2.frameName = 'alienPink_duck';
               if (!gameOver2) {
