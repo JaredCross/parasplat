@@ -249,7 +249,7 @@ Main.prototype = {
       });
 
       //parachute deployment
-      if (me.parachuteButton.onDown) {
+      if (me.parachuteButton.onUp) {
         if (playerNumber === 1) {
           me.player1.body.gravity.y = 30;
           me.player1.animations.stop();
