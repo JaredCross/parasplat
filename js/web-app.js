@@ -1,5 +1,6 @@
 var game = false;
 
+var userData;
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
@@ -105,8 +106,9 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
 
   $http.post("/getdata")
     .success(function (data) {
-
+        userData = data;
         $scope.user.data = data; // must be within success function to automatically call $apply
+
         console.log($scope.user.data);
     });
   // $scope.$route = $route;
