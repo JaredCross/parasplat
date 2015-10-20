@@ -32,7 +32,7 @@ Main.prototype = {
     var me = this;
 
     //Add the player to the game by creating a new sprite
-    me.player2 = me.game.add.sprite(900, 100, 'players', 'alienPink_duck');
+    me.player2 = me.game.add.sprite(900, 100, 'players', 'alienPink_walk1');
 
     //Set the players anchor point to be in the middle horizontally
     me.player2.anchor.setTo(0.5, 0.5);
@@ -62,7 +62,7 @@ Main.prototype = {
     var me = this;
 
     //Add the player to the game by creating a new sprite
-    me.player1 = me.game.add.sprite(300, 100, 'players', 'alienGreen_duck');
+    me.player1 = me.game.add.sprite(300, 100, 'players', 'alienGreen_walk1');
 
     //Set the players anchor point to be in the middle horizontally
     me.player1.anchor.setTo(0.5, 0.5);
@@ -169,9 +169,9 @@ Main.prototype = {
       });
 
       socket.on('p1GroundUpdate', function (data) {
-        console.log(data.alive + ' from 1');
         p1Alive.ready = true;
         p1Alive.alive = data.alive;
+        p1Alive.finalTime = data.finalTime;
         // if (playerNumber === 2) {
         if (data.alive === false) {
           me.player1.frameName = 'alienGreen_climb1';
@@ -191,7 +191,7 @@ Main.prototype = {
       socket.on('p2GroundUpdate', function (data) {
         p2Alive.ready = true;
         p2Alive.alive = data.alive;
-        console.log(data.alive + ' from 2');
+        p2Alive.finalTime = data.finalTime;
         // if (playerNumber === 1) {
           if (data.alive) {
             me.player2.animations.stop();
@@ -226,6 +226,36 @@ Main.prototype = {
 
     update: function() {
       var me = this;
+
+      //gameover
+      if(p1Alive.ready && p2Alive.ready) {
+        if (!p1Alive.alive && !p2Alive.alive) {
+          me.game.add.text(600, 600, 'Everybody Lose!', style);
+          game.add.button(450, 200, 'button', newGame);
+        } else if (!p1Alive.alive && p2Alive.alive) {
+          if (playerNumber === 2) {
+            me.game.add.text(600, 600, 'You win!', style);
+            game.add.button(450, 200, 'button', newGame);
+          } else {
+            me.game.add.text(600, 600, 'You lost =(', style);
+            game.add.button(450, 200, 'button', newGame);
+          }
+
+        } else if (p1Alive.alive && !p2Alive.alive) {
+            if (playerNumber === 1) {
+              me.game.add.text(600, 600, 'You win!', style);
+              game.add.button(450, 200, 'button', newGame);
+            } else {
+              me.game.add.text(600, 600, 'You lost =(', style);
+              game.add.button(450, 200, 'button', newGame);
+            }
+        } else if (p1Alive.alive && p2Alive.alive) {
+            me.game.add.text(600, 600, 'Everybody Win!', style);
+            game.add.button(450, 200, 'button', newGame);
+
+        }
+
+      }
 
       if (p1Alive.ready) {
         if (p1Alive.alive) {
@@ -370,4 +400,8 @@ function updateTimer() {
         }
 
 
+}
+
+function newGame() {
+  window.location.reload();
 }
