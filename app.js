@@ -82,18 +82,17 @@ app.get('/auth/google',
 
   app.post('/checkstatus', function (req, res) {
     if (req.user) {
-      users.findOne({email : req.user.data.email}, function (err, userInfo) {
+      users.findOne({email : req.user.email}, function (err, userInfo) {
         if (userInfo) {
           res.send(userInfo);
         } else {
-          // users.insert({
-          //   displayName : displayName,
-          //   email : email,
-          //   gamesPlayed : 0,
-          //   gamesWon: 0
-          // }, function (err, userInfo) {
-          //   res.send(userInfo);
-          // });
+          users.insert({
+            email : req.user.email,
+            gamesPlayed : 0,
+            gamesWon: 0
+          }, function (err, userInfo) {
+            res.send(userInfo);
+          });
           res.send(req.user);
         }
       });
