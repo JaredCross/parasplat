@@ -1,6 +1,7 @@
 var game = false;
 
 var userData;
+var socket = io();
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
