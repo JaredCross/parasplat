@@ -82,10 +82,6 @@ app.get('/auth/google',
 
   app.post('/checkstatus', function (req, res) {
     if (req.user) {
-      users.findOne({email : req.user.data.email}, function (err, userInfo) {
-        if (userInfo) {
-          res.send(userInfo);
-        } else {
           users.insert({
             displayName : req.user.data.displayName,
             email : req.user.data.email,
@@ -95,8 +91,6 @@ app.get('/auth/google',
             res.send(userInfo);
           });
         }
-      });
-    }
   });
 
 
