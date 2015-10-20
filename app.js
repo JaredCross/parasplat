@@ -238,7 +238,8 @@ io.on('connection', function (socket) {
   socket.on('playedGame', function (data) {
     var newCount = data.gamesPlayed + 1;
     users.update({_id : data._id}, {$set : {gamesPlayed : newCount}});
-
+  });
+  
 });
 
 
