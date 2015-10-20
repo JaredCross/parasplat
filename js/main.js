@@ -169,6 +169,9 @@ Main.prototype = {
       socket.on('p1GroundUpdate', function (data) {
         console.log(data.alive + ' from 1');
         // if (playerNumber === 2) {
+        if (data.alive === false) {
+          me.player1.frameName = 'alienGreen_climb1';
+        }
           if (data.alive) {
             me.player1.animations.stop();
             me.player1.frameName = 'alienGreen_duck';
