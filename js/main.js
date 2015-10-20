@@ -223,37 +223,49 @@ Main.prototype = {
       }
 
 
-      if (playerNumber === 1 && !gameOver1) {
+      if (playerNumber === 1) {
 
 
         this.game.physics.arcade.collide(me.player1, me.ground, function () {
-          gameOver1 = true;
             stopTimer = true;
             if (me.player1.body.gravity.y != 30) {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_climb1';
-                socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
+                if (!gameOver1) {
+                  socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
+                  gameOver1 = true;
+                }
             } else {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_duck';
-                socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
+                if (!gameOver1) {
+                  socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
+                  gameOver1 = true;
+                }
+
             }
         });
       }
 
-      if (playerNumber === 2 && !gameOver2) {
+      if (playerNumber === 2) {
 
         this.game.physics.arcade.collide(me.player2, me.ground, function () {
-          gameOver2 = true;
+
           stopTimer = true;
           if (me.player2.body.gravity != 30) {
               finalTime = timer2.text;
               me.player2.frameName = 'alienPink_climb1';
-              socket.emit('p2Ground', {finalTime : finalTime, alive : 'false'});
+              if (!gameOver2) {
+                socket.emit('p2Ground', {finalTime : finalTime, alive : false});
+                gameOver2 = true;
+              }
           } else {
               finalTime = timer2.text;
               me.player2.frameName = 'alienPink_duck';
-              socket.emit('p2Ground', {finalTime: finalTime, alive : 'true'});
+              if (!gameOver2) {
+                socket.emit('p2Ground', {finalTime: finalTime, alive : true});
+                gameOver2 = true;
+              }
            }
         });
       }
