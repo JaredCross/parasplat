@@ -7,7 +7,7 @@ GameOver.prototype = {
 
       if (userData) {
         console.log(userData);
-        socket.emit('gamePlayed', {dataUpdate : userData});
+        socket.emit('playedGame', userData);
       }
       var me = this;
       this.game.stage.backgroundColor = '479cde';

@@ -1,7 +1,6 @@
 var game = false;
 
 var userData;
-var socket = io();
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
@@ -99,9 +98,6 @@ app.controller('UsersController', function ($scope, Parasplat) {
 
 });
 
-socket.on('gamePlayed', function (data) {
-  console.log(data);
-});
 
 app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http, Parasplat) {
   if (game) {
