@@ -85,7 +85,6 @@ app.get('/auth/google',
       users.findOne({email : req.user.data.email}).then(function (userInfo) {
         if (userInfo) {
           res.send(userInfo);
-          return 0;
         } else {
           return users.insert({
             displayName : req.user.data.displayName,
