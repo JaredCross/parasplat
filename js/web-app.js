@@ -98,6 +98,10 @@ app.controller('UsersController', function ($scope, Parasplat) {
 
 });
 
+socket.on('gamePlayed', function (data) {
+  console.log(data);
+});
+
 app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http, Parasplat) {
   if (game) {
     Parasplat.destroyGame();
