@@ -19,7 +19,7 @@ app.run(function ($rootScope, $location, loginService) {
         var connected = loginService.isLogged();
         connected.then(function (data) {
           console.log(data);
-          if(data) {
+          if(data.data.displayName) {
             $rootScope.loggedIn = true;
             $rootScope.user = data.data;
           } else {
@@ -29,22 +29,6 @@ app.run(function ($rootScope, $location, loginService) {
   });
 });
 
-app.factory('Auth', function(){
-var user;
-
-return{
-
-   isLoggedIn : function(data){
-       if (data.data.email) {
-         user = true;
-         return user;
-       } else {
-         user = false;
-         return user;
-       }
-   }
- };
-});
 
 app.factory('Parasplat', function () {
 
