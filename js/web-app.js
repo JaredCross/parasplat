@@ -19,11 +19,9 @@ app.run(function ($rootScope, $location, loginService) {
 
         var connected = loginService.isLogged();
         connected.then(function (data) {
-          console.log(data.data[0]);
           if(data.data[0].displayName) {
             $rootScope.loggedIn = true;
             $rootScope.user = data.data[0];
-            console.log($rootScope.user);
           } else {
             $rootScope.loggedIn = false;
           }
@@ -75,7 +73,7 @@ app.factory('Parasplat', function () {
 
 
 //CONTROLLERS
-app.controller('UsersController', function ($scope, Parasplat) {
+app.controller('UsersController', function ($http, $scope, Parasplat) {
 
 
   var socket = io();
@@ -91,6 +89,10 @@ app.controller('UsersController', function ($scope, Parasplat) {
 
   $scope.startGame = function () {
     Parasplat.startGame();
+  };
+
+  $scope.logout = function () {
+    $http.post('/logout');
   };
 
   $scope.endGame = function () {
