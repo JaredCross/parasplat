@@ -94,12 +94,12 @@ Main.prototype = {
     create: function() {
       //timer
 
-      timer1 = game.add.text(100, 50, '00:00:00', style);
+      timer1 = game.add.text(100, 50, '00.00', style);
       timer1.fixedToCamera = true;
 
       timeNow = game.time.time;
 
-      timer2 = game.add.text(800, 50, '00:00:00', style);
+      timer2 = game.add.text(700, 50, '00.00', style);
       timer2.fixedToCamera = true;
 
        var me = this;
@@ -220,7 +220,7 @@ Main.prototype = {
       } else {
         playerDisplayA = game.add.text(300, 50, 'Them!', style);
         playerDisplayA.fixedToCamera = true;
-        playerDisplayB = game.add.text(950, 50, 'You!', style);
+        playerDisplayB = game.add.text(900, 50, 'You!', style);
         playerDisplayB.fixedToCamera = true;
       }
 
@@ -377,9 +377,9 @@ function updateTimer() {
         minutes = '0' + minutes;
 
         if (playerNumber === 1) {
-          timer1.setText('Stopwatch: ' + minutes + ':'+ seconds + ':' + milliseconds);
+          timer1.setText('Stopwatch: ' + seconds + '.' + milliseconds);
         } else {
-          timer2.setText('Stopwatch: ' + minutes + ':'+ seconds + ':' + milliseconds);
+          timer2.setText('Stopwatch: ' + seconds + '.' + milliseconds);
         }
 
 
