@@ -108,7 +108,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
   if ($scope.user) {
     $http.post("/getdata")
       .success(function (data) {
-          $scope.user.data = data;
+          $scope.user = data;
           userData = $scope.user.data;
       });
   }
