@@ -22,7 +22,7 @@ server.listen(3000);
 //passport and google-oauth
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(user, done) {
@@ -83,7 +83,7 @@ function(req, res) {
 
 
 app.post('/checkstatus', function (req, res) {
-  if (req.user.email) {
+  if (req.user) {
     users.findOne({id : req.user.id}, function (err, userInfo) {
         res.send(req.user);
     });
