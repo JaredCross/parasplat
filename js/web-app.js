@@ -109,7 +109,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     $http.post("/getdata")
       .success(function (data) {
           $scope.user = data;
-          userData = $scope.user.data;
+          $scope.userData = data;
       });
   }
 
