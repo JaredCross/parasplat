@@ -38,7 +38,8 @@ html(ng-app='parasplat')
                   li(ng-show='loggedIn')
                     a(href="#/user") {{user.displayName}}
                   li(ng-show='loggedIn')
-                    a(ng-click='logout()') Logout
-                  li {{users}}
+                    a(href='#/' ng-click='logout()') Logout
+                  li 
+                    a(href='#/') {{users}}
           div(class='inner cover' ng-view)
             block content
