@@ -21,9 +21,4 @@ GameTitle.prototype = {
       });
     },
 
-
-    // startGame: function(){
-    //     this.game.state.start("Main");
-    // }
-
 };

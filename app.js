@@ -7,18 +7,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 var users = require('./db/database');
-
 var routes = require('./routes/index');
 
 
 var app = express();
 
-// var app = require('express')();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 server.listen(3000);
-
 
 
 //passport and google-oauth
@@ -44,17 +40,6 @@ passport.use(new GoogleStrategy({
 
       return done(null, profile);
 
-    // users.find({ googleId : profile.id}, function (err, data) {
-    //   if (err) {
-    //     users.insert({googleId : profile.id}, function (err, data) {
-    //       return done(err, data);
-    //     });
-    //   } else {
-    //     return done(err, data);
-    //   }
-    //   kjdsj = 9;
-    // });
-
   }
 ));
 
@@ -73,55 +58,46 @@ app.get('/auth/google',
   }));
 
 
+app.get('/auth/google/callback',
+passport.authenticate('google', { failureRedirect: '/login' }),
+function(req, res) {
+  res.redirect('/');
+});
 
-  app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
 
-  app.post('/checkstatus', function (req, res) {
-    if (req.user) {
-      users.findOne({email : req.user.email}, function (err, userInfo) {
-        if (userInfo) {
-          res.send(req.user);
-        } else {
-          users.insert({
-            email : req.user.email,
-            gamesPlayed : 0,
-            gamesWon: 0
-          }, function (err, userInfo) {
-            res.send(req.user);
-          });
-          res.send(req.user);
-        }
-      });
-    } else {
-      res.send(req.user);
-    }
-  });
-
-  app.post('/getdata', function (req, res) {
+app.post('/checkstatus', function (req, res) {
+  if (req.user) {
     users.findOne({email : req.user.email}, function (err, userInfo) {
-      res.send(userInfo);
+      if (userInfo) {
+        res.send(req.user);
+      } else {
+        users.insert({
+          email : req.user.email,
+          gamesPlayed : 0,
+          gamesWon: 0
+        }, function (err, userInfo) {
+          res.send(req.user);
+        });
+        res.send(req.user);
+      }
     });
+  } else {
+    res.send(req.user);
+  }
+});
+
+app.post('/getdata', function (req, res) {
+  users.findOne({email : req.user.email}, function (err, userInfo) {
+    res.send(userInfo);
   });
-
-
-
-// app.use(function (req, res, next) {
-//   io.on('connection', function (socket) {
-//     req.session.clientID = socket.id;
-//   });
-//
-//   next();
-// });
-
+});
 
 //socket.io client connections/disconnects
 var clients = [];
 var gameNumber = 1;
 var gameReadyTracker = {};
+
+var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
   clients.push(socket.id);
@@ -239,8 +215,11 @@ io.on('connection', function (socket) {
     var newCount = data.gamesPlayed + 1;
     users.update({_id : data._id}, {$set : {gamesPlayed : newCount}});
   });
-  
+
 });
+
+
+
 
 
 //view engine setup
@@ -297,5 +276,4 @@ app.use(function(err, req, res, next) {
 module.exports = {
   app : app,
   server : server,
-  io : io
 };
