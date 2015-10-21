@@ -108,7 +108,7 @@ GameOver.prototype = {
 
         if (!p1Alive.alive && !p2Alive.alive) {
             gameOverMsg = me.game.add.text(500, 150, 'Everybody Lose!', style);
-            newGameButton=game.add.button(500, 400, 'button', newGame);
+            newGameButton=game.add.button(500, 300, 'button', newGame);
             gameOverMsg.fixToCamera = true;
             newGameButton.fixToCamera = true;
             me.createPlayer1();
@@ -122,12 +122,12 @@ GameOver.prototype = {
             me.player2.frameName = 'alienPink_duck';
           if (playerNumber === 2) {
             gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-            newGameButton=game.add.button(500, 400, 'button', newGame);
+            newGameButton=game.add.button(500, 300, 'button', newGame);
             gameOverMsg.fixToCamera = true;
             newGameButton.fixToCamera = true;
           } else {
             gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-            newGameButton=game.add.button(500, 400, 'button', newGame);
+            newGameButton=game.add.button(500, 300, 'button', newGame);
             gameOverMsg.fixToCamera = true;
             newGameButton.fixToCamera = true;
           }
@@ -139,12 +139,12 @@ GameOver.prototype = {
               me.player2.frameName = 'alienPink_climb1';
             if (playerNumber === 1) {
               gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-              newGameButton=game.add.button(500, 400, 'button', newGame);
+              newGameButton=game.add.button(500, 300, 'button', newGame);
               gameOverMsg.fixToCamera = true;
               newGameButton.fixToCamera = true;
             } else {
               gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-              newGameButton=game.add.button(500, 400, 'button', newGame);
+              newGameButton=game.add.button(500, 300, 'button', newGame);
               gameOverMsg.fixToCamera = true;
               newGameButton.fixToCamera = true;
             }
@@ -166,24 +166,24 @@ GameOver.prototype = {
             if (p1FinalTime > p2FinalTime) {
               if (playerNumber === 1) {
                 gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
+                newGameButton=game.add.button(500, 300, 'button', newGame);
                 gameOverMsg.fixToCamera = true;
                 newGameButton.fixToCamera = true;
               } else {
                 gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
+                newGameButton=game.add.button(500, 300, 'button', newGame);
                 gameOverMsg.fixToCamera = true;
                 newGameButton.fixToCamera = true;
               }
             } else if (p1FinalTime < p2FinalTime){
               if (playerNumber === 2) {
                 gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
+                newGameButton=game.add.button(500, 300, 'button', newGame);
                 gameOverMsg.fixToCamera = true;
                 newGameButton.fixToCamera = true;
               } else {
                 gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
+                newGameButton=game.add.button(500, 300, 'button', newGame);
                 gameOverMsg.fixToCamera = true;
                 newGameButton.fixToCamera = true;
               }
