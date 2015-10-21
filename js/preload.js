@@ -33,10 +33,12 @@ Preload.prototype = {
 
       socket.on('player1', function () {
         playerNumber = 1;
+        console.log(playerNumber);
       });
 
       socket.on('player2', function () {
         playerNumber = 2;
+        console.log(playerNumber);
       });
 
       socket.on('gameReady', function () {

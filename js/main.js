@@ -383,5 +383,5 @@ function updateTimer() {
 }
 
 function newGame() {
-  window.location.reload();
+  window.location.reload(true);
 }

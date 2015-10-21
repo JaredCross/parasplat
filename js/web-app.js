@@ -1,6 +1,12 @@
-var game = false;
-
 var userData;
+
+var lfg;
+
+var socket = io();
+
+socket.on('leaveLFG', function () {
+  clearInterval(lfg);
+});
 
 var app = angular.module('parasplat', ['ngRoute', 'ngAnimate']);
 
@@ -19,7 +25,6 @@ app.run(function ($rootScope, $location, loginService) {
 
         var connected = loginService.isLogged();
         connected.then(function (data) {
-          console.log(data);
           if(data.data.displayName) {
             $rootScope.loggedIn = true;
             $rootScope.user = data.data;
@@ -50,14 +55,10 @@ app.factory('Parasplat', function () {
 
       socket.emit('joinGameLobby', {user : 'me'});
 
-      var lfg = setInterval(function () {
+      lfg = setInterval(function () {
         socket.emit('lookingForGame');
       }, 3000);
-
-
-      socket.on('leaveLFG', function () {
-        clearInterval(lfg);
-      });
+      console.log(lfg);
 
     },
 
@@ -90,6 +91,7 @@ app.controller('UsersController', function ($http, $scope, Parasplat) {
 
   $scope.startGame = function () {
     Parasplat.startGame();
+    $scope.gameStart = true;
   };
 
   $scope.endGame = function () {
@@ -100,10 +102,6 @@ app.controller('UsersController', function ($http, $scope, Parasplat) {
 
 
 app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http, Parasplat) {
-  if (game) {
-    Parasplat.destroyGame();
-    game = false;
-  }
 
   if ($scope.user) {
     $http.post("/getdata")
