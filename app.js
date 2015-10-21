@@ -38,7 +38,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    users.find({id : profle.id}, function (err, doc) {
+    users.find({id : profile.id}, function (err, doc) {
       if (err) {
         users.insert({
           id : profile.id,
