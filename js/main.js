@@ -233,6 +233,7 @@ Main.prototype = {
 
       //gameover
       if(p1Alive.ready && p2Alive.ready) {
+        socket.emit('gameOverLeave');
         this.game.state.start('GameOver');
       }
 

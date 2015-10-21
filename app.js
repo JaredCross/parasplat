@@ -114,6 +114,11 @@ io.on('connection', function (socket) {
   clients.push(socket.id);
   io.emit('clients', clients);
 
+  //leave game room on game over
+  socket.on('gameOverLeave',function () {
+    socket.leave('gameRoom ' + socket.rooms[1].substring(9));
+  });
+
   //move payer to game lobby
   socket.on('joinGameLobby', function (data) {
     socket.join('gameLobby');
