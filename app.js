@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 var users = require('./db/database');
 var routes = require('./routes/index');
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 
 var app = express();
@@ -18,7 +20,6 @@ server.listen(3000);
 
 
 //passport and google-oauth
-var passport = require('passport');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -27,8 +28,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
-var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 passport.use(new GoogleStrategy({
     clientID: process.env.PARASPLAT_SESSION_GOOGLE_CLIENT_ID,
@@ -52,9 +51,13 @@ app.use(cookieSession({
 app.use( passport.initialize());
 app.use( passport.session());
 
+app.get('/', function(req, res, next) {
+  res.render('index');
+});
+
 app.get('/auth/google',
   passport.authenticate('google', { scope:
-    ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
+    ['https://www.googleapis.com/auth/userinfo.profile']
   }));
 
 
@@ -66,6 +69,7 @@ function(req, res) {
 
 
 app.post('/checkstatus', function (req, res) {
+  console.log(req.user);
   if (req.user) {
     users.findOne({email : req.user.email}, function (err, userInfo) {
       if (userInfo) {
@@ -82,7 +86,7 @@ app.post('/checkstatus', function (req, res) {
       }
     });
   } else {
-    res.send(req.user);
+    res.send('no data');
   }
 });
 
