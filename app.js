@@ -83,6 +83,7 @@ function(req, res) {
 
 
 app.post('/checkstatus', function (req, res) {
+  console.log(req.user 'server 86');
   if (req.user) {
     users.findOne({id : req.user.id}, function (err, userInfo) {
         res.send(req.user);
