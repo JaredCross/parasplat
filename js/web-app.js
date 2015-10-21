@@ -19,10 +19,10 @@ app.run(function ($rootScope, $location, loginService) {
 
         var connected = loginService.isLogged();
         connected.then(function (data) {
-          console.log(data);
-          if(data.data.displayName) {
+          console.log(data.data[0]);
+          if(data.data[0].displayName) {
             $rootScope.loggedIn = true;
-            $rootScope.user = data.data;
+            $rootScope.user = data.data[0];
             console.log($rootScope.user);
           } else {
             $rootScope.loggedIn = false;
