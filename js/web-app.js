@@ -116,7 +116,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
 });
 
 app.controller('LogoutController', function ($scope, $route, $routeParams, $location, $http) {
-  $http.post('/logout').success(function () {
+  $http.get('/logout').success(function () {
     console.log('logged out');
   });
 });
@@ -141,7 +141,7 @@ app.config(function($routeProvider, $locationProvider){
           controllerAs: "app"
         }).when('/logout',
           {
-            templateUrl:"/partials/home.html",
+            templateUrl:"",
             controller:"LogoutController",
             controllerAs: "app"
           });

@@ -28,7 +28,7 @@ html(ng-app='parasplat')
         div(class="cover-container")
           div(class="masthead clearfix")
             div(class="inner")
-              h3(class="masthead-brand") Parasplat!
+              h3(class="masthead-brand") Parasplat! {{users}}
               nav
                 ul(class="nav masthead-nav")
                   li(class="active")
@@ -37,10 +37,7 @@ html(ng-app='parasplat')
                     a(href="/auth/google") Google Sign In!
                   li(ng-show='loggedIn')
                     a(href="#/user") {{user.displayName}}
-                  li(ng-show='loggedIn') 
-                    a(href='#/logout') Logout
-                  li
-                    a(href='#/') {{users}}
-                    
+                  li(ng-show='loggedIn')
+                    a(href='/logout') Logout            
           div(class='inner cover' ng-view)
             block content
