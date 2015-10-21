@@ -83,12 +83,12 @@ function(req, res) {
 
 
 app.post('/checkstatus', function (req, res) {
-  if (req.user) {
+  if (req.user.email) {
     users.findOne({id : req.user.id}, function (err, userInfo) {
         res.send(req.user);
     });
   } else {
-    res.send('no data');
+    res.send('null');
   }
 });
 
