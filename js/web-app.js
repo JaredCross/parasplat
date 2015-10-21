@@ -110,6 +110,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
       .success(function (data) {
           $scope.user = data;
           $scope.userData = data;
+          userData = data;
       });
   }
 
