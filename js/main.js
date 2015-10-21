@@ -19,6 +19,7 @@ var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth
 
 var newGameButton;
 var gameOverMsg;
+var alreadySent = false;
 
 Main.prototype = {
 
@@ -236,7 +237,8 @@ Main.prototype = {
         socket.emit('gameOverLeave');
         // this.game.state.start('GameOver');
 
-        if (userData) {
+        if (userData && !alreadySent) {
+          alreadySent = true;
           console.log(userData);
           socket.emit('playedGame', userData);
         }
