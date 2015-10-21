@@ -22,7 +22,7 @@ server.listen(3000);
 //passport and google-oauth
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {

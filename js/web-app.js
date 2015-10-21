@@ -92,10 +92,6 @@ app.controller('UsersController', function ($http, $scope, Parasplat) {
     Parasplat.startGame();
   };
 
-  $scope.logout = function () {
-    $http.post('/logout');
-  };
-
   $scope.endGame = function () {
     Parasplat.destroyGame();
   };
@@ -114,10 +110,15 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
       .success(function (data) {
           $scope.user.data = data;
           userData = $scope.user.data;
-          console.log($scope.user.data);
       });
   }
 
+});
+
+app.controller('LogoutController', function ($scope, $route, $routeParams, $location, $http) {
+  $http.post('/logout').success(function () {
+    console.log('logged out');
+  });
 });
 
 //config section
@@ -138,5 +139,10 @@ app.config(function($routeProvider, $locationProvider){
           templateUrl:"/partials/user.html",
           controller:"ApplicationController",
           controllerAs: "app"
-        });
+        }).when('/logout',
+          {
+            templateUrl:"/partials/home.html",
+            controller:"LogoutController",
+            controllerAs: "app"
+          });
 });

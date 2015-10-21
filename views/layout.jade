@@ -37,8 +37,10 @@ html(ng-app='parasplat')
                     a(href="/auth/google") Google Sign In!
                   li(ng-show='loggedIn')
                     a(href="#/user") {{user.displayName}}
-                  li(ng-show='loggedIn' ng-click='logout') Logout
-                  li {{users}}
+                  li(ng-show='loggedIn') 
+                    a(href='#/logout') Logout
+                  li
+                    a(href='#/') {{users}}
                     
           div(class='inner cover' ng-view)
             block content
