@@ -19,7 +19,6 @@ var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth
 
 var newGameButton;
 var gameOverMsg;
-var alreadySent = false;
 
 Main.prototype = {
 
@@ -235,54 +234,9 @@ Main.prototype = {
       //gameover
       if(p1Alive.ready && p2Alive.ready) {
         socket.emit('gameOverLeave');
-        // this.game.state.start('GameOver');
-
-        if (userData && !alreadySent) {
-          alreadySent = true;
-          console.log(userData);
-          socket.emit('playedGame', userData);
-        }
-
-        this.game.stage.backgroundColor = '479cde';
-
-          if (!p1Alive.alive && !p2Alive.alive) {
-            gameOverMsg = me.game.add.text(500, 150, 'Everybody Lose!', style);
-            newGameButton=game.add.button(500, 400, 'button', newGame);
-            gameOverMsg.fixToCamera = true;
-            newGameButton.fixToCamera = true;
-          } else if (!p1Alive.alive && p2Alive.alive) {
-            if (playerNumber === 2) {
-              gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-              newGameButton=game.add.button(500, 400, 'button', newGame);
-              gameOverMsg.fixToCamera = true;
-              newGameButton.fixToCamera = true;
-            } else {
-              gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-              newGameButton=game.add.button(500, 400, 'button', newGame);
-              gameOverMsg.fixToCamera = true;
-              newGameButton.fixToCamera = true;
-            }
-
-          } else if (p1Alive.alive && !p2Alive.alive) {
-              if (playerNumber === 1) {
-                gameOverMsg = me.game.add.text(500, 150, 'You win!', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
-                gameOverMsg.fixToCamera = true;
-                newGameButton.fixToCamera = true;
-              } else {
-                gameOverMsg = me.game.add.text(500, 150, 'You lost =(', style);
-                newGameButton=game.add.button(500, 400, 'button', newGame);
-                gameOverMsg.fixToCamera = true;
-                newGameButton.fixToCamera = true;
-              }
-          } else if (p1Alive.alive && p2Alive.alive) {
-              gameOverMsg = me.game.add.text(500, 150, 'Everybody Win!', style);
-              newGameButton=game.add.button(500, 400, 'button', newGame);
-              gameOverMsg.fixToCamera = true;
-              newGameButton.fixToCamera = true;
-
-          }
-
+        this.game.state.start('GameOver');
+        console.log(p1Alive);
+        console.log(p2Alive);
       }
 
 
@@ -317,14 +271,14 @@ Main.prototype = {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_climb1';
                 if (!gameOver1) {
-                  socket.emit('p1Ground', {finalTime : finalTime, alive : 'false'});
+                  socket.emit('p1Ground', {finalTime : finalTime, alive : false});
                   gameOver1 = true;
                 }
             } else if (!gameOver1) {
                 finalTime = timer1.text;
                 me.player1.frameName = 'alienGreen_duck';
                 if (!gameOver1) {
-                  socket.emit('p1Ground', {finalTime: finalTime, alive : 'true'});
+                  socket.emit('p1Ground', {finalTime: finalTime, alive : true});
                   gameOver1 = true;
                 }
 

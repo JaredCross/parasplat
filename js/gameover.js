@@ -1,11 +1,12 @@
 var GameOver = function(game){};
-
+var alreadySent = false;
 
 GameOver.prototype = {
 
     create: function(){
 
-      if (userData) {
+      if (userData && !alreadySent) {
+        alreadySent = true;
         console.log(userData);
         socket.emit('playedGame', userData);
       }
