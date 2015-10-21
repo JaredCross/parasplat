@@ -22,11 +22,13 @@ server.listen(3000);
 //passport and google-oauth
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(user, done) {
+  users.find({id : user.id}, function (err, doc) {
+    done(null, doc);
+  });
 });
 
 passport.use(new GoogleStrategy({
@@ -36,9 +38,21 @@ passport.use(new GoogleStrategy({
     passReqToCallback : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log(profile);
-      return done(null, profile);
-
+    users.find({id : profle.id}, function (err, doc) {
+      if (err) {
+        users.insert({
+          id : profile.id,
+          email : profile.email,
+          displayName: profile.displayName,
+          gamesPlayed : 0,
+          gamesWon : 0
+        }, function (err, doc) {
+          return done(null, doc);
+        });
+      } else {
+        return done(null, doc);
+      }
+    });
   }
 ));
 
@@ -57,7 +71,7 @@ app.get('/', function(req, res, next) {
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
-    ['https://www.googleapis.com/auth/userinfo.profile']
+    ['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile']
   }));
 
 
