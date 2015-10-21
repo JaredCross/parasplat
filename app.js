@@ -39,7 +39,7 @@ passport.use(new GoogleStrategy({
   },
   function(request, accessToken, refreshToken, profile, done) {
     users.find({id : profile.id}, function (err, doc) {
-      if (err) {
+      if (doc.length === 0) {
         users.insert({
           id : profile.id,
           email : profile.email,
@@ -84,19 +84,8 @@ function(req, res) {
 
 app.post('/checkstatus', function (req, res) {
   if (req.user) {
-    users.findOne({email : req.user.email}, function (err, userInfo) {
-      if (userInfo) {
+    users.findOne({id : req.user.id}, function (err, userInfo) {
         res.send(req.user);
-      } else {
-        users.insert({
-          email : req.user.email,
-          gamesPlayed : 0,
-          gamesWon: 0
-        }, function (err, userInfo) {
-          res.send(req.user);
-        });
-        res.send(req.user);
-      }
     });
   } else {
     res.send('no data');
