@@ -26,7 +26,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  users.find({id : user.id}, function (err, doc) {
+  users.findOne({id : user.id}, function (err, doc) {
     done(null, doc);
   });
 });
@@ -38,8 +38,8 @@ passport.use(new GoogleStrategy({
     passReqToCallback : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    users.find({id : profile.id}, function (err, doc) {
-      if (doc.length === 0) {
+    users.findOne({id : profile.id}, function (err, doc) {
+      if (!doc) {
         users.insert({
           id : profile.id,
           email : profile.email,
