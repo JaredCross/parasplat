@@ -22,7 +22,7 @@ app.run(function ($rootScope, $location, loginService) {
           console.log(data);
           if(data.data.displayName) {
             $rootScope.loggedIn = true;
-            $rootScope.user = data.data[0];
+            $rootScope.user = data.data;
           } else {
             $rootScope.loggedIn = false;
           }
