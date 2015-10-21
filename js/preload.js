@@ -11,7 +11,6 @@ Preload.prototype = {
       this.game.load.atlasXML('players', 'assets/player_characters.png', 'assets/player_characters.xml');
       this.game.load.atlasXML('octopus', 'assets/octopus.png', 'assets/octopus.xml');
       this.game.load.image('button', 'assets/gameicons/PNG/White/2x/buttonStart.png');
-      this.game.load.atlasXML('backgroundImgs', 'assets/kenney-backgroundelements/Spritesheet/bgElements_spritesheet.png', 'assets/kenney-backgroundelements/Spritesheet/bgElements_spritesheet.xml');
     },
 
     create: function(){
