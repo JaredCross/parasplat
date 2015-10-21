@@ -36,7 +36,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-
+    console.log(profile);
       return done(null, profile);
 
   }
@@ -69,7 +69,6 @@ function(req, res) {
 
 
 app.post('/checkstatus', function (req, res) {
-  console.log(req.user);
   if (req.user) {
     users.findOne({email : req.user.email}, function (err, userInfo) {
       if (userInfo) {
