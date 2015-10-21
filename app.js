@@ -86,6 +86,11 @@ app.post('/checkstatus', function (req, res) {
   }
 });
 
+app.post('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 app.post('/getdata', function (req, res) {
   users.findOne({email : req.user.email}, function (err, userInfo) {
     res.send(userInfo);
