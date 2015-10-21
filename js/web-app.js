@@ -23,6 +23,7 @@ app.run(function ($rootScope, $location, loginService) {
           if(data.data.displayName) {
             $rootScope.loggedIn = true;
             $rootScope.user = data.data;
+            console.log($rootScope.user);
           } else {
             $rootScope.loggedIn = false;
           }
@@ -104,7 +105,7 @@ app.controller('ApplicationController', function ($scope, $route, $routeParams, 
     Parasplat.destroyGame();
     game = false;
   }
-  
+
   if ($scope.user) {
     $http.post("/getdata")
       .success(function (data) {
