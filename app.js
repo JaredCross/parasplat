@@ -180,13 +180,15 @@ io.on('connection', function (socket) {
 
   //coordinates relay
   socket.on('p1Info', function (data) {
-    io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1InfoUpdate', data);
+    if (socket.rooms[1]) {
+      io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1InfoUpdate', data);
+    }
   });
 
   socket.on('p2Info', function (data) {
-    // if (socket.rooms[1]) {
+    if (socket.rooms[1]) {
       io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p2InfoUpdate', data);
-    // }
+    }
   });
 
   //parachute relay
@@ -232,7 +234,10 @@ io.on('connection', function (socket) {
 
   //log to db
   socket.on('playedGame', function (data) {
+    console.log('i am here!!!!!!');
+    console.log(data + ' from playedGame');
     var newCount = data.gamesPlayed + 1;
+    console.log(newCount + ' from new count');
     users.update({id : data.id}, {$set : {gamesPlayed : newCount}});
   });
 
