@@ -233,7 +233,7 @@ io.on('connection', function (socket) {
   });
 
   //log to db
-  socket.on('playedGame', function (data) {
+  socket.on('doneSendToDB', function (data) {
     console.log('i am here!!!!!!');
     console.log(data + ' from playedGame');
     var newCount = data.gamesPlayed + 1;
