@@ -103,6 +103,7 @@ app.controller('UsersController', function ($http, $scope, Parasplat) {
 
 app.controller('ApplicationController', function ($scope, $route, $routeParams, $location, $http, Parasplat) {
 
+
   if ($scope.user) {
     $http.post("/getdata")
       .success(function (data) {

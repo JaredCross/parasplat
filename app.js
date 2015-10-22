@@ -69,6 +69,10 @@ app.get('/', function(req, res, next) {
   res.render('index');
 });
 
+app.get('/home', function (req, res, next) {
+  res.redirect('/');
+});
+
 app.get('/auth/google',
   passport.authenticate('google', { scope:
     ['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile']
