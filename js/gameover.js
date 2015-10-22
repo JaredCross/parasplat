@@ -104,6 +104,10 @@ GameOver.prototype = {
         socket.emit('doneSendToDB', userData);
       }
 
+      socket.on('okiedokie', function () {
+        console.log(data);
+      });
+
       this.game.stage.backgroundColor = '479cde';
 
         if (!p1Alive.alive && !p2Alive.alive) {

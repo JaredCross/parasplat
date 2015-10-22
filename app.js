@@ -191,6 +191,16 @@ io.on('connection', function (socket) {
     }
   });
 
+  //log to db
+  socket.on('doneSendToDB', function (data) {
+    socket.emit('okiedokie', data);
+    console.log('i am here!!!!!!');
+    console.log(data + ' from playedGame');
+    var newCount = data.gamesPlayed + 1;
+    console.log(newCount + ' from new count');
+    users.update({id : data.id}, {$set : {gamesPlayed : newCount}});
+  });
+
   //parachute relay
   socket.on('p1Parachute', function (data) {
     io.sockets.to('gameRoom ' + socket.rooms[1].substring(9)).emit('p1ParachuteUpdate');
@@ -232,14 +242,6 @@ io.on('connection', function (socket) {
 
   });
 
-  //log to db
-  socket.on('doneSendToDB', function (data) {
-    console.log('i am here!!!!!!');
-    console.log(data + ' from playedGame');
-    var newCount = data.gamesPlayed + 1;
-    console.log(newCount + ' from new count');
-    users.update({id : data.id}, {$set : {gamesPlayed : newCount}});
-  });
 
 });
 
